@@ -1,0 +1,247 @@
+﻿<UserControl x:Class="FileConverter.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource WindowBackgroundBrush}">
+
+    <UserControl.Resources>
+
+        <!-- RADIO BUTTON STYLE -->
+
+        <Style x:Key="OptionRadioButton"
+               TargetType="RadioButton">
+
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryTextBrush}"/>
+
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,8,0,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        </Style>
+
+        <!-- SETTINGS CARD STYLE -->
+
+        <Style x:Key="SettingsCard"
+               TargetType="Border">
+
+            <Setter Property="Background"
+                    Value="{DynamicResource CardBackgroundBrush}"/>
+
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource BorderBrush}"/>
+
+            <Setter Property="BorderThickness" Value="1"/>
+
+        </Style>
+
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+
+        <StackPanel Margin="30">
+
+            <!-- HEADER -->
+
+            <TextBlock x:Name="PageHeading"
+                       Text="{DynamicResource L_Settings}"
+                       FontSize="27"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+            <TextBlock x:Name="PageDescription"
+                       Text="Customize your FileConverter experience."
+                       FontSize="14"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       Margin="0,7,0,28"/>
+
+            <!-- APPEARANCE -->
+
+            <Border Style="{StaticResource SettingsCard}">
+
+                <StackPanel>
+
+                    <TextBlock x:Name="AppearanceHeading"
+                               Text="Appearance"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <TextBlock x:Name="AppearanceDescription"
+                               Text="Choose how FileConverter looks."
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               Margin="0,6,0,18"/>
+
+                    <Separator Background="{DynamicResource BorderBrush}"/>
+
+                    <TextBlock x:Name="ThemeLabel"
+                               Text="Application theme"
+                               FontWeight="SemiBold"
+                               FontSize="14"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
+                               Margin="0,18,0,8"/>
+
+                    <RadioButton x:Name="SystemThemeRadio"
+                                 GroupName="ThemeGroup"
+                                 Content="{DynamicResource L_Follow_Windows}"
+                                 Style="{StaticResource OptionRadioButton}"
+                                 Checked="ThemeOption_Checked"/>
+
+                    <RadioButton x:Name="LightThemeRadio"
+                                 GroupName="ThemeGroup"
+                                 Content="Light"
+                                 Style="{StaticResource OptionRadioButton}"
+                                 Checked="ThemeOption_Checked"/>
+
+                    <RadioButton x:Name="DarkThemeRadio"
+                                 GroupName="ThemeGroup"
+                                 Content="Dark"
+                                 Style="{StaticResource OptionRadioButton}"
+                                 Checked="ThemeOption_Checked"/>
+
+                    <TextBlock x:Name="ThemeHint"
+                               Text="Your selection will be saved automatically."
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               FontSize="12"
+                               Margin="0,10,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- LANGUAGE -->
+
+            <Border Style="{StaticResource SettingsCard}">
+
+                <StackPanel>
+
+                    <TextBlock x:Name="LanguageHeading"
+                               Text="Language"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <TextBlock x:Name="LanguageDescription"
+                               Text="Choose your preferred application language."
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               Margin="0,6,0,18"/>
+
+                    <Separator Background="{DynamicResource BorderBrush}"/>
+
+                    <TextBlock x:Name="LanguageLabel"
+                               Text="Application language"
+                               FontWeight="SemiBold"
+                               FontSize="14"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
+                               Margin="0,18,0,8"/>
+
+                    <RadioButton x:Name="SystemLanguageRadio"
+                                 GroupName="LanguageGroup"
+                                 Content="{DynamicResource L_Follow_Windows}"
+                                 Style="{StaticResource OptionRadioButton}"
+                                 Checked="LanguageOption_Checked"/>
+
+                    <RadioButton x:Name="EnglishRadio"
+                                 GroupName="LanguageGroup"
+                                 Content="{DynamicResource L_English}"
+                                 Style="{StaticResource OptionRadioButton}"
+                                 Checked="LanguageOption_Checked"/>
+
+                    <RadioButton x:Name="FrenchRadio"
+                                 GroupName="LanguageGroup"
+                                 Content="Français"
+                                 Style="{StaticResource OptionRadioButton}"
+                                 Checked="LanguageOption_Checked"/>
+
+                    <TextBlock x:Name="LanguageHint"
+                               Text="Your selection will be saved automatically."
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               FontSize="12"
+                               Margin="0,10,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- ABOUT FILECONVERTER -->
+
+            <Border Style="{StaticResource SettingsCard}">
+
+                <StackPanel>
+
+                    <TextBlock x:Name="AboutHeading"
+                               Text="About FileConverter"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <TextBlock x:Name="AboutDescription"
+                               Text="Information about this application."
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               Margin="0,6,0,18"/>
+
+                    <Separator Background="{DynamicResource BorderBrush}"/>
+
+                    <!-- APPLICATION NAME -->
+
+                    <Grid Margin="0,18,0,0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="ApplicationNameLabel"
+                                   Text="Application"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"/>
+
+                        <TextBlock Grid.Column="1"
+                                   Text="FileConverter"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    </Grid>
+
+                    <!-- VERSION -->
+
+                    <Grid Margin="0,15,0,0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="VersionLabel"
+                                   Text="Version"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"/>
+
+                        <TextBlock Grid.Column="1"
+                                   Text="1.0.0"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    </Grid>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- SETTINGS STATUS -->
+
+            <TextBlock x:Name="SettingsStatusText"
+                       Text=""
+                       Foreground="{DynamicResource AccentBrush}"
+                       FontSize="13"
+                       Margin="0,0,0,20"
+                       TextWrapping="Wrap"/>
+
+        </StackPanel>
+
+    </ScrollViewer>
+
+</UserControl>

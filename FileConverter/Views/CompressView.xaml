@@ -1,0 +1,382 @@
+﻿<UserControl x:Class="FileConverter.Views.CompressView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="900"
+             d:DesignWidth="900"
+             Background="{DynamicResource WindowBackgroundBrush}">
+
+    <UserControl.Resources>
+
+        <!-- PRIMARY ACTION BUTTON -->
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background"
+                    Value="{DynamicResource ActionBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="18,11"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <!-- SECONDARY BUTTON -->
+
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Background"
+                    Value="{DynamicResource InputBackgroundBrush}"/>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,9"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+
+        <StackPanel Margin="30">
+
+            <!-- HEADER -->
+
+            <TextBlock Text="{DynamicResource L_Compress_Files}"
+                       FontSize="26"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+            <TextBlock Text="{DynamicResource L_Create_a_separate_ZIP_archive_for_each_selected_file}"
+                       FontSize="13"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       Margin="0,7,0,22"/>
+
+            <!-- UPLOAD AREA -->
+
+            <Border x:Name="DropZone"
+                    Background="{DynamicResource ActionBackgroundBrush}"
+                    CornerRadius="12"
+                    Padding="25"
+                    Margin="0,0,0,22"
+                    AllowDrop="True"
+                    DragOver="DropZone_DragOver"
+                    Drop="DropZone_Drop">
+
+                <StackPanel HorizontalAlignment="Center">
+
+                    <TextBlock Text="&#xE896;"
+                               FontFamily="Segoe MDL2 Assets"
+                               FontSize="38"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,12"/>
+
+                    <TextBlock Text="{DynamicResource L_Drag_and_drop_your_files_here}"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="{DynamicResource L_Or_select_files_from_your_computer}"
+                               FontSize="12"
+                               Foreground="#E4F2E9"
+                               HorizontalAlignment="Center"
+                               Margin="0,8,0,18"/>
+
+                    <Button Content="{DynamicResource L_Choose_Files}"
+                            Style="{StaticResource ActionButton}"
+                            HorizontalAlignment="Center"
+                            Click="ChooseFiles_Click"/>
+
+                    <TextBlock Text="{DynamicResource L_Multiple_file_selection_is_supported}"
+                               FontSize="11"
+                               Foreground="#E4F2E9"
+                               HorizontalAlignment="Center"
+                               Margin="0,15,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- FILE SUMMARY -->
+
+            <Grid Margin="0,0,0,20">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- SELECTED FILES SUMMARY -->
+
+                <Border Grid.Column="0"
+                        Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="9"
+                        Padding="18">
+
+                    <StackPanel>
+
+                        <TextBlock Text="{DynamicResource L_SELECTED_FILES}"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"/>
+
+                        <TextBlock x:Name="FileCountText"
+                                   Text="0"
+                                   FontSize="27"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Margin="0,7,0,0"/>
+
+                    </StackPanel>
+
+                </Border>
+
+                <!-- COMPRESSION STATUS -->
+
+                <Border Grid.Column="2"
+                        Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="9"
+                        Padding="18">
+
+                    <StackPanel>
+
+                        <TextBlock Text="{DynamicResource L_COMPRESSION_STATUS}"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"/>
+
+                        <TextBlock x:Name="CompressionStatusText"
+                                   Text="{DynamicResource L_Not_configured}"
+                                   FontSize="17"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   Margin="0,12,0,0"/>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Grid>
+
+            <!-- SELECTED FILES -->
+
+            <Border Background="{DynamicResource CardBackgroundBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="20">
+
+                <StackPanel>
+
+                    <DockPanel Margin="0,0,0,15">
+
+                        <TextBlock Text="{DynamicResource L_Selected_Files}"
+                                   FontSize="17"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   VerticalAlignment="Center"/>
+
+                        <Button x:Name="ClearAllButton"
+                                Content="{DynamicResource L_Clear_All}"
+                                Style="{StaticResource SecondaryButton}"
+                                DockPanel.Dock="Right"
+                                Click="ClearAll_Click"/>
+
+                    </DockPanel>
+
+                    <TextBlock x:Name="EmptyListText"
+                               Text="{DynamicResource L_No_files_selected_yet_Choose_files_or_drag_them_into_the_upload_area}"
+                               FontSize="12"
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"
+                               Margin="0,25,0,25"/>
+
+                    <ListBox x:Name="FileList"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             MinHeight="0"
+                             MaxHeight="350"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                        <ListBox.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <Border Background="{DynamicResource SurfaceBackgroundBrush}"
+                                        BorderBrush="{DynamicResource BorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="7"
+                                        Padding="12"
+                                        Margin="0,0,0,8">
+
+                                    <Grid>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="42"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"
+                                                   Text="&#xE8A5;"
+                                                   FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="23"
+                                                   Foreground="{DynamicResource AccentBrush}"
+                                                   VerticalAlignment="Center"/>
+
+                                        <StackPanel Grid.Column="1"
+                                                    VerticalAlignment="Center">
+
+                                            <TextBlock Text="{Binding FileName}"
+                                                       FontSize="13"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                                            <TextBlock Text="{Binding FilePath}"
+                                                       FontSize="10"
+                                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                                       TextTrimming="CharacterEllipsis"/>
+
+                                        </StackPanel>
+
+                                        <Button Grid.Column="2"
+                                                Content="{DynamicResource L_Remove}"
+                                                Tag="{Binding FilePath}"
+                                                Click="RemoveFile_Click"
+                                                Style="{StaticResource SecondaryButton}"
+                                                Padding="10,7"
+                                                VerticalAlignment="Center"/>
+
+                                    </Grid>
+
+                                </Border>
+
+                            </DataTemplate>
+
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- COMPRESSION CONFIGURATION -->
+
+            <Border Background="{DynamicResource CardBackgroundBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="20"
+                    Margin="0,20,0,0">
+
+                <StackPanel>
+
+                    <TextBlock Text="{DynamicResource L_Compression_Settings}"
+                               FontSize="17"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <TextBlock Text="{DynamicResource L_Configure_how_your_files_will_be_compressed}"
+                               FontSize="12"
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               Margin="0,8,0,18"/>
+
+                    <!-- COMPRESSION LEVEL -->
+
+                    <TextBlock Text="{DynamicResource L_Compression_Level}"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <ComboBox x:Name="CompressionLevelCombo"
+                              Height="36"
+                              Margin="0,8,0,18"
+                              SelectedIndex="1"
+                              Padding="8"
+                              Background="{DynamicResource InputBackgroundBrush}"
+                              Foreground="{DynamicResource PrimaryTextBrush}"
+                              BorderBrush="{DynamicResource InputBorderBrush}">
+
+                        <ComboBoxItem Content="{DynamicResource L_Fast}"/>
+                        <ComboBoxItem Content="{DynamicResource L_Normal}"/>
+                        
+
+                    </ComboBox>
+
+                    <!-- OUTPUT LOCATION -->
+
+                    <TextBlock Text="{DynamicResource L_Output_Location}"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <RadioButton x:Name="SameFolderRadio"
+                                 Content="{DynamicResource L_Save_in_the_same_folder_as_the_original_files}"
+                                 IsChecked="True"
+                                 Margin="0,10,0,8"
+                                 FontSize="12"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <RadioButton x:Name="CustomFolderRadio"
+                                 Content="{DynamicResource L_Save_in_another_folder}"
+                                 Margin="0,0,0,10"
+                                 FontSize="12"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <Grid Margin="0,0,0,18">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="OutputFolderTextBox"
+                                 Grid.Column="0"
+                                 Height="34"
+                                 IsReadOnly="True"
+                                 VerticalContentAlignment="Center"
+                                 Padding="8"
+                                 Text="{DynamicResource L_No_destination_selected}"
+                                 Background="{DynamicResource InputBackgroundBrush}"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"
+                                 BorderBrush="{DynamicResource InputBorderBrush}"/>
+
+                        <Button x:Name="BrowseFolderButton"
+                                Grid.Column="1"
+                                Content="{DynamicResource L_Browse}"
+                                Margin="8,0,0,0"
+                                Padding="15,5"
+                                IsEnabled="False"
+                                Style="{StaticResource SecondaryButton}"
+                                Click="BrowseFolder_Click"/>
+
+                    </Grid>
+
+                    <!-- ORIGINAL FILES -->
+
+                    <Button Content="{DynamicResource L_Create_ZIP_archives}" Click="CompressFiles_Click"
+                            Style="{StaticResource SecondaryButton}" Padding="16,8"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </StackPanel>
+
+    </ScrollViewer>
+
+</UserControl>

@@ -1,0 +1,251 @@
+﻿<UserControl x:Class="FileConverter.Views.ConvertView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="650"
+             d:DesignWidth="850"
+             Background="{DynamicResource WindowBackgroundBrush}">
+
+    <UserControl.Resources>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource ActionBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- PAGE INTRODUCTION -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+
+            <TextBlock Text="{DynamicResource L_Convert_images}"
+                       FontSize="25"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+            <TextBlock Text="{DynamicResource L_Convert_single_frame_images_to_JPG_PNG_or_BMP}"
+                       FontSize="13"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       Margin="0,7,0,0"/>
+
+        </StackPanel>
+
+        <!-- FILE DROP AREA -->
+        <Border Grid.Row="1"
+                x:Name="DropZone"
+                AllowDrop="True"
+                DragEnter="DropZone_DragEnter"
+                DragLeave="DropZone_DragLeave"
+                Drop="DropZone_Drop"
+                Background="{DynamicResource CardBackgroundBrush}"
+                BorderBrush="{DynamicResource AccentBrush}"
+                BorderThickness="2"
+                CornerRadius="10"
+                Padding="25"
+                Margin="0,0,0,20">
+
+            <StackPanel HorizontalAlignment="Center">
+
+                <TextBlock Text="☁"
+                           FontSize="42"
+                           Foreground="{DynamicResource AccentBrush}"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="{DynamicResource L_Drop_your_files_here}"
+                           FontSize="19"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,10,0,5"/>
+
+                <TextBlock Text="{DynamicResource L_You_can_select_or_drop_multiple_files}"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="12"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,15"/>
+
+                <Button Content="{DynamicResource L_Choose_Files}"
+                        Style="{StaticResource ActionButton}"
+                        Click="ChooseFiles_Click"
+                        HorizontalAlignment="Center"/>
+
+            </StackPanel>
+        </Border>
+
+        <!-- SELECTED FILES -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource CardBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="15">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- FILE LIST HEADER -->
+                <Grid Grid.Row="0" Margin="0,0,0,12">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource L_Selected_files}"
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                        <TextBlock x:Name="FileCountText"
+                                   Text="{DynamicResource L_0_files_selected}"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                            Content="{DynamicResource L_Clear_all}"
+                            Click="ClearFiles_Click"
+                            Background="Transparent"
+                            Foreground="#B64A4A"
+                            BorderThickness="0"
+                            Cursor="Hand"/>
+
+                </Grid>
+
+                <!-- FILE LIST -->
+                <Border Grid.Row="1"
+                        Background="{DynamicResource InputBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="6">
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                        <ItemsControl x:Name="FileList" Margin="8">
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Border Background="{DynamicResource SurfaceBackgroundBrush}"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="6"
+                                            Padding="10"
+                                            Margin="0,3">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="75"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0"
+                                                        VerticalAlignment="Center">
+
+                                                <TextBlock Text="{Binding FileName}"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource PrimaryTextBrush}"
+                                                           TextTrimming="CharacterEllipsis"/>
+
+                                                <TextBlock Text="{Binding Extension}"
+                                                           FontSize="11"
+                                                           Foreground="{DynamicResource SecondaryTextBrush}"
+                                                           Margin="0,3,0,0"/>
+
+                                            </StackPanel>
+
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding FormattedSize}"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource SecondaryTextBrush}"/>
+
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding Status}"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource AccentBrush}"/>
+
+                                            <Button Grid.Column="3"
+                                                    Content="✕"
+                                                    Tag="{Binding}"
+                                                    Click="RemoveFile_Click"
+                                                    Background="Transparent"
+                                                    Foreground="#B64A4A"
+                                                    BorderThickness="0"
+                                                    Cursor="Hand"/>
+
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+
+                <!-- OUTPUT FORMAT -->
+                <StackPanel Grid.Row="2" Margin="0,15,0,0">
+
+                    <TextBlock Text="{DynamicResource L_Output_format}"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
+                               Margin="0,0,0,7"/>
+
+                    <ComboBox x:Name="OutputFormatCombo"
+                              Height="36"
+                              Padding="8"
+                              Background="{DynamicResource InputBackgroundBrush}"
+                              Foreground="{DynamicResource PrimaryTextBrush}"
+                              BorderBrush="{DynamicResource InputBorderBrush}"
+                              SelectedIndex="0">
+
+                        <ComboBoxItem Content="{DynamicResource L_Select_format}"
+                                      IsEnabled="False"/>
+                        
+                        <ComboBoxItem Content="JPG"/>
+                        <ComboBoxItem Content="PNG"/>
+                        <ComboBoxItem Content="BMP"/>
+                        
+                        
+                        
+                        
+                        
+
+                    </ComboBox>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <!-- CONVERT BUTTON -->
+        <Button Grid.Row="3"
+                Content="{DynamicResource L_Convert_Files}" Click="ConvertFiles_Click"
+                Style="{StaticResource ActionButton}"
+                Height="45"
+                Margin="0,15,0,0"
+                HorizontalAlignment="Right"
+                IsEnabled="False"/>
+
+    </Grid>
+</UserControl>

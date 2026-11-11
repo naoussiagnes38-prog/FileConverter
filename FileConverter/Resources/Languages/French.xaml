@@ -1,0 +1,191 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="L_Convert" xml:space="preserve">Convertir</sys:String>
+    <sys:String x:Key="L_Translate" xml:space="preserve">Traduire</sys:String>
+    <sys:String x:Key="L_History" xml:space="preserve">Historique</sys:String>
+    <sys:String x:Key="L_Manual" xml:space="preserve">Guide</sys:String>
+    <sys:String x:Key="L_Compress" xml:space="preserve">Compresser</sys:String>
+    <sys:String x:Key="L_Encrypt" xml:space="preserve">Chiffrer</sys:String>
+    <sys:String x:Key="L_Settings" xml:space="preserve">Paramètres</sys:String>
+    <sys:String x:Key="L_Compress_Files" xml:space="preserve">Compresser des fichiers</sys:String>
+    <sys:String x:Key="L_Create_a_separate_ZIP_archive_for_each_selected_file" xml:space="preserve">Créez une archive ZIP pour chaque fichier sélectionné.</sys:String>
+    <sys:String x:Key="L_Drag_and_drop_your_files_here" xml:space="preserve">Déposez vos fichiers ici</sys:String>
+    <sys:String x:Key="L_Or_select_files_from_your_computer" xml:space="preserve">Ou sélectionnez des fichiers sur votre ordinateur</sys:String>
+    <sys:String x:Key="L_Choose_Files" xml:space="preserve">Choisir des fichiers</sys:String>
+    <sys:String x:Key="L_Multiple_file_selection_is_supported" xml:space="preserve">Vous pouvez sélectionner plusieurs fichiers.</sys:String>
+    <sys:String x:Key="L_SELECTED_FILES" xml:space="preserve">FICHIERS SÉLECTIONNÉS</sys:String>
+    <sys:String x:Key="L_COMPRESSION_STATUS" xml:space="preserve">ÉTAT DE LA COMPRESSION</sys:String>
+    <sys:String x:Key="L_Not_configured" xml:space="preserve">En attente</sys:String>
+    <sys:String x:Key="L_Files_selected" xml:space="preserve">Fichiers sélectionnés</sys:String>
+    <sys:String x:Key="L_Selected_Files" xml:space="preserve">Fichiers sélectionnés</sys:String>
+    <sys:String x:Key="L_Selected_files" xml:space="preserve">Fichiers sélectionnés</sys:String>
+    <sys:String x:Key="L_Clear_All" xml:space="preserve">Tout effacer</sys:String>
+    <sys:String x:Key="L_Clear_all" xml:space="preserve">Tout effacer</sys:String>
+    <sys:String x:Key="L_No_files_selected_yet_Choose_files_or_drag_them_into_the_upload_area" xml:space="preserve">Choisissez des fichiers ou déposez-les ici.</sys:String>
+    <sys:String x:Key="L_Remove" xml:space="preserve">Retirer</sys:String>
+    <sys:String x:Key="L_Compression_Settings" xml:space="preserve">Paramètres de compression</sys:String>
+    <sys:String x:Key="L_Configure_how_your_files_will_be_compressed" xml:space="preserve">Choisissez les options de compression.</sys:String>
+    <sys:String x:Key="L_Compression_Level" xml:space="preserve">Niveau de compression</sys:String>
+    <sys:String x:Key="L_Fast" xml:space="preserve">Rapide</sys:String>
+    <sys:String x:Key="L_Normal" xml:space="preserve">Normal</sys:String>
+    <sys:String x:Key="L_Output_Location" xml:space="preserve">Dossier de destination</sys:String>
+    <sys:String x:Key="L_Save_in_the_same_folder_as_the_original_files" xml:space="preserve">Enregistrer dans le dossier des fichiers d’origine</sys:String>
+    <sys:String x:Key="L_Save_in_another_folder" xml:space="preserve">Enregistrer dans un autre dossier</sys:String>
+    <sys:String x:Key="L_No_destination_selected" xml:space="preserve">Aucun dossier sélectionné</sys:String>
+    <sys:String x:Key="L_Same_folder_as_original_files" xml:space="preserve">Même dossier que les fichiers d’origine</sys:String>
+    <sys:String x:Key="L_Browse" xml:space="preserve">Parcourir</sys:String>
+    <sys:String x:Key="L_Create_ZIP_archives" xml:space="preserve">Créer les archives ZIP</sys:String>
+    <sys:String x:Key="L_User_Manual" xml:space="preserve">Guide d’utilisation</sys:String>
+    <sys:String x:Key="L_Learn_how_to_use_FileConverter_with_our_step_by_step_guides" xml:space="preserve">Découvrez FileConverter à l’aide de nos guides détaillés.</sys:String>
+    <sys:String x:Key="L_How_can_we_help_you" xml:space="preserve">Comment pouvons-nous vous aider ?</sys:String>
+    <sys:String x:Key="L_Search_the_manual_to_find_answers_and_instructions" xml:space="preserve">Recherchez des réponses et des instructions dans le guide.</sys:String>
+    <sys:String x:Key="L_Browse_Help_Topics" xml:space="preserve">Rubriques d’aide</sys:String>
+    <sys:String x:Key="L_Getting_Started" xml:space="preserve">Premiers pas</sys:String>
+    <sys:String x:Key="L_Learn_the_basic_features_and_how_to_navigate_FileConverter" xml:space="preserve">Découvrez les fonctions principales et la navigation de FileConverter.</sys:String>
+    <sys:String x:Key="L_Read_Guide" xml:space="preserve">Lire le guide  →</sys:String>
+    <sys:String x:Key="L_File_Conversion" xml:space="preserve">Conversion de fichiers</sys:String>
+    <sys:String x:Key="L_Understand_how_to_select_files_and_prepare_them_for_conversion" xml:space="preserve">Découvrez comment sélectionner des fichiers et préparer leur conversion.</sys:String>
+    <sys:String x:Key="L_Conversion_History" xml:space="preserve">Historique des conversions</sys:String>
+    <sys:String x:Key="L_Learn_how_to_search_and_filter_previous_conversion_records" xml:space="preserve">Découvrez comment rechercher et filtrer les opérations précédentes.</sys:String>
+    <sys:String x:Key="L_File_Compression" xml:space="preserve">Compression de fichiers</sys:String>
+    <sys:String x:Key="L_Discover_how_to_create_ZIP_archives" xml:space="preserve">Découvrez comment créer des archives ZIP.</sys:String>
+    <sys:String x:Key="L_File_Encryption" xml:space="preserve">Chiffrement de fichiers</sys:String>
+    <sys:String x:Key="L_Learn_about_protecting_files_with_encryption" xml:space="preserve">Découvrez comment protéger vos fichiers par chiffrement.</sys:String>
+    <sys:String x:Key="L_Application_Settings" xml:space="preserve">Paramètres de l’application</sys:String>
+    <sys:String x:Key="L_Understand_the_available_application_preferences" xml:space="preserve">Découvrez les préférences disponibles.</sys:String>
+    <sys:String x:Key="L_No_help_topics_match_your_search_Try_another_keyword" xml:space="preserve">Aucune rubrique ne correspond à votre recherche. Essayez un autre mot-clé.</sys:String>
+    <sys:String x:Key="L_Frequently_Asked_Questions" xml:space="preserve">Questions fréquentes</sys:String>
+    <sys:String x:Key="L_Where_can_I_find_my_previous_conversions" xml:space="preserve">Où retrouver mes conversions précédentes ?</sys:String>
+    <sys:String x:Key="L_Open_the_History_section_from_the_sidebar_to_view_previous_conversion_records" xml:space="preserve">Ouvrez l’historique depuis la barre latérale.</sys:String>
+    <sys:String x:Key="L_Can_I_select_multiple_files" xml:space="preserve">Puis-je sélectionner plusieurs fichiers ?</sys:String>
+    <sys:String x:Key="L_Yes_The_Convert_screen_supports_selecting_multiple_files_and_adding_files_through_drag_and_drop" xml:space="preserve">Oui, vous pouvez sélectionner ou déposer plusieurs fichiers sur l’écran de conversion.</sys:String>
+    <sys:String x:Key="L_Can_I_convert_every_file_format" xml:space="preserve">Quels formats puis-je convertir ?</sys:String>
+    <sys:String x:Key="L_The_Convert_screen_exports_single_frame_images_to_JPG_PNG_or_BMP" xml:space="preserve">L’écran de conversion exporte des images à une seule trame en JPG, PNG ou BMP.</sys:String>
+    <sys:String x:Key="L_FileConverter_User_Manual" xml:space="preserve">Guide d’utilisation de FileConverter</sys:String>
+    <sys:String x:Key="L_Back_to_Help_Topics" xml:space="preserve">←  Retour aux rubriques d’aide</sys:String>
+    <sys:String x:Key="L_USER_MANUAL" xml:space="preserve">GUIDE D’UTILISATION</sys:String>
+    <sys:String x:Key="L_Article_Title" xml:space="preserve">Titre de l’article</sys:String>
+    <sys:String x:Key="L_Article_description" xml:space="preserve">Description de l’article</sys:String>
+    <sys:String x:Key="L_Step_by_step_guide" xml:space="preserve">Guide détaillé</sys:String>
+    <sys:String x:Key="L_You_have_reached_the_end_of_this_guide" xml:space="preserve">Vous êtes arrivé à la fin de ce guide.</sys:String>
+    <sys:String x:Key="L_Encrypt_or_decrypt_files" xml:space="preserve">Chiffrer ou déchiffrer des fichiers</sys:String>
+    <sys:String x:Key="L_Protect_files_or_restore_FileConverter_encrypted_files" xml:space="preserve">Protégez vos fichiers ou restaurez des fichiers .encrypted de FileConverter.</sys:String>
+    <sys:String x:Key="L_Select_Files" xml:space="preserve">Sélectionner des fichiers</sys:String>
+    <sys:String x:Key="L_Add_the_files_you_want_to_process" xml:space="preserve">Ajoutez les fichiers à traiter.</sys:String>
+    <sys:String x:Key="L_Drag_and_drop_files_here" xml:space="preserve">Déposez des fichiers ici</sys:String>
+    <sys:String x:Key="L_or" xml:space="preserve">ou</sys:String>
+    <sys:String x:Key="L_Browse_Files" xml:space="preserve">Parcourir les fichiers</sys:String>
+    <sys:String x:Key="L_Browse_files" xml:space="preserve">Parcourir les fichiers</sys:String>
+    <sys:String x:Key="L_0_files_selected" xml:space="preserve">0 fichier sélectionné</sys:String>
+    <sys:String x:Key="L_No_files_selected_yet" xml:space="preserve">Aucun fichier sélectionné.</sys:String>
+    <sys:String x:Key="L_Encryption_Settings" xml:space="preserve">Paramètres de chiffrement</sys:String>
+    <sys:String x:Key="L_Configure_how_your_files_will_be_protected" xml:space="preserve">Choisissez comment protéger vos fichiers.</sys:String>
+    <sys:String x:Key="L_Encryption_Algorithm" xml:space="preserve">Algorithme de chiffrement</sys:String>
+    <sys:String x:Key="L_Password" xml:space="preserve">Mot de passe</sys:String>
+    <sys:String x:Key="L_Confirm_password_encryption_only" xml:space="preserve">Confirmer le mot de passe (chiffrement uniquement)</sys:String>
+    <sys:String x:Key="L_Use_a_strong_password_and_keep_it_somewhere_safe_You_will_need_it_to_decrypt_your_files" xml:space="preserve">Choisissez un mot de passe robuste et conservez-le en lieu sûr. Il sera nécessaire pour déchiffrer vos fichiers.</sys:String>
+    <sys:String x:Key="L_Output_Settings" xml:space="preserve">Paramètres de sortie</sys:String>
+    <sys:String x:Key="L_Choose_where_to_save_processed_files" xml:space="preserve">Choisissez où enregistrer les fichiers traités.</sys:String>
+    <sys:String x:Key="L_Save_in_the_original_file_location" xml:space="preserve">Enregistrer à l’emplacement d’origine</sys:String>
+    <sys:String x:Key="L_Save_in_a_different_folder" xml:space="preserve">Enregistrer dans un autre dossier</sys:String>
+    <sys:String x:Key="L_Browse_Folder" xml:space="preserve">Parcourir les dossiers</sys:String>
+    <sys:String x:Key="L_Original_file_locations" xml:space="preserve">Emplacements d’origine</sys:String>
+    <sys:String x:Key="L_File_protection" xml:space="preserve">Protection des fichiers</sys:String>
+    <sys:String x:Key="L_Ready_to_encrypt" xml:space="preserve">Prêt à chiffrer.</sys:String>
+    <sys:String x:Key="L_Ready" xml:space="preserve">Prêt.</sys:String>
+    <sys:String x:Key="L_Encrypt_Files" xml:space="preserve">Chiffrer les fichiers</sys:String>
+    <sys:String x:Key="L_Decrypt_Files" xml:space="preserve">Déchiffrer les fichiers</sys:String>
+    <sys:String x:Key="L_Convert_images" xml:space="preserve">Convertir des images</sys:String>
+    <sys:String x:Key="L_Convert_single_frame_images_to_JPG_PNG_or_BMP" xml:space="preserve">Convertissez des images à une seule trame en JPG, PNG ou BMP.</sys:String>
+    <sys:String x:Key="L_Drop_your_files_here" xml:space="preserve">Déposez vos fichiers ici</sys:String>
+    <sys:String x:Key="L_You_can_select_or_drop_multiple_files" xml:space="preserve">Vous pouvez sélectionner ou déposer plusieurs fichiers.</sys:String>
+    <sys:String x:Key="L_Output_format" xml:space="preserve">Format de sortie</sys:String>
+    <sys:String x:Key="L_Select_format" xml:space="preserve">Sélectionner un format…</sys:String>
+    <sys:String x:Key="L_Convert_Files" xml:space="preserve">Convertir les fichiers</sys:String>
+    <sys:String x:Key="L_Document_Translation" xml:space="preserve">Traduction de documents</sys:String>
+    <sys:String x:Key="L_Translate_English_and_French_documents_to_plain_text_using_a_local_LibreTranslate_server" xml:space="preserve">Traduisez vos documents anglais et français en texte brut à l’aide d’un serveur LibreTranslate local.</sys:String>
+    <sys:String x:Key="L_Supported_languages" xml:space="preserve">Langues prises en charge</sys:String>
+    <sys:String x:Key="L_English" xml:space="preserve">Anglais</sys:String>
+    <sys:String x:Key="L_French" xml:space="preserve">Français</sys:String>
+    <sys:String x:Key="L_Add_TXT_DOCX_RTF_or_text_based_PDF_documents" xml:space="preserve">Ajoutez des documents TXT, DOCX, RTF ou des PDF contenant du texte</sys:String>
+    <sys:String x:Key="L_Drag_and_drop_your_documents_here" xml:space="preserve">Déposez vos documents ici</sys:String>
+    <sys:String x:Key="L_Selected_documents" xml:space="preserve">Documents sélectionnés</sys:String>
+    <sys:String x:Key="L_0_documents" xml:space="preserve">0 document</sys:String>
+    <sys:String x:Key="L_No_documents_added_yet" xml:space="preserve">Aucun document ajouté.</sys:String>
+    <sys:String x:Key="L_Language" xml:space="preserve">Langue : </sys:String>
+    <sys:String x:Key="L_Direction" xml:space="preserve">Sens : </sys:String>
+    <sys:String x:Key="L_Translate_documents" xml:space="preserve">Traduire les documents</sys:String>
+    <sys:String x:Key="L_Operation_History" xml:space="preserve">Historique des opérations</sys:String>
+    <sys:String x:Key="L_Track_your_previous_file_operations" xml:space="preserve">Consultez vos opérations précédentes.</sys:String>
+    <sys:String x:Key="L_TOTAL_OPERATIONS" xml:space="preserve">TOTAL DES OPÉRATIONS</sys:String>
+    <sys:String x:Key="L_SUCCESSFUL" xml:space="preserve">RÉUSSIES</sys:String>
+    <sys:String x:Key="L_FAILED" xml:space="preserve">ÉCHOUÉES</sys:String>
+    <sys:String x:Key="L_Search_history" xml:space="preserve">Rechercher dans l’historique</sys:String>
+    <sys:String x:Key="L_FILTER_BY_STATUS" xml:space="preserve">FILTRER PAR ÉTAT</sys:String>
+    <sys:String x:Key="L_All" xml:space="preserve">Toutes</sys:String>
+    <sys:String x:Key="L_Completed" xml:space="preserve">Terminée</sys:String>
+    <sys:String x:Key="L_Failed" xml:space="preserve">Échouée</sys:String>
+    <sys:String x:Key="L_Recent_operations" xml:space="preserve">Opérations récentes</sys:String>
+    <sys:String x:Key="L_FILE_NAME" xml:space="preserve">NOM DU FICHIER</sys:String>
+    <sys:String x:Key="L_FROM" xml:space="preserve">SOURCE</sys:String>
+    <sys:String x:Key="L_TO" xml:space="preserve">SORTIE</sys:String>
+    <sys:String x:Key="L_DATE" xml:space="preserve">DATE</sys:String>
+    <sys:String x:Key="L_STATUS" xml:space="preserve">ÉTAT</sys:String>
+    <sys:String x:Key="L_History_records_will_appear_here" xml:space="preserve">L’historique s’affichera ici.</sys:String>
+    <sys:String x:Key="L_Not_detected" xml:space="preserve">Non détectée</sys:String>
+    <sys:String x:Key="L_Pending" xml:space="preserve">En attente</sys:String>
+    <sys:String x:Key="L_Queued" xml:space="preserve">En file d’attente</sys:String>
+    <sys:String x:Key="L_Detecting_language" xml:space="preserve">Détection de la langue…</sys:String>
+    <sys:String x:Key="L_Translating" xml:space="preserve">Traduction en cours…</sys:String>
+    <sys:String x:Key="L_English_French" xml:space="preserve">Anglais → Français</sys:String>
+    <sys:String x:Key="L_French_English" xml:space="preserve">Français → Anglais</sys:String>
+    <sys:String x:Key="L_Unknown" xml:space="preserve">Inconnue</sys:String>
+    <sys:String x:Key="L_Saved" xml:space="preserve">Enregistré : </sys:String>
+    <sys:String x:Key="L_Encrypting_files" xml:space="preserve">Chiffrement en cours…</sys:String>
+    <sys:String x:Key="L_Decrypting_files" xml:space="preserve">Déchiffrement en cours…</sys:String>
+    <sys:String x:Key="L_0_file_s_selected" xml:space="preserve">{0} fichier(s) sélectionné(s)</sys:String>
+    <sys:String x:Key="L_0_file_s_ready" xml:space="preserve">{0} fichier(s) prêt(s).</sys:String>
+    <sys:String x:Key="L_0_document" xml:space="preserve">{0} document</sys:String>
+    <sys:String x:Key="L_Which_image_formats_can_I_export" xml:space="preserve">Quels formats d’image puis-je exporter ?</sys:String>
+    <sys:String x:Key="L_Learn_the_basic_features_and_navigation_of_FileConverter" xml:space="preserve">Découvrez les fonctions principales et la navigation de FileConverter.</sys:String>
+    <sys:String x:Key="L_Open_FileConverter" xml:space="preserve">Ouvrez FileConverter.</sys:String>
+    <sys:String x:Key="L_Use_the_sidebar_to_navigate_between_sections" xml:space="preserve">Utilisez la barre latérale pour naviguer entre les sections.</sys:String>
+    <sys:String x:Key="L_Open_Convert_to_select_files" xml:space="preserve">Ouvrez Conversion pour sélectionner des fichiers.</sys:String>
+    <sys:String x:Key="L_Visit_History_to_review_conversion_records" xml:space="preserve">Consultez l’historique pour retrouver vos opérations.</sys:String>
+    <sys:String x:Key="L_Learn_how_to_prepare_files_for_conversion" xml:space="preserve">Découvrez comment préparer vos fichiers pour la conversion.</sys:String>
+    <sys:String x:Key="L_Open_the_Convert_section" xml:space="preserve">Ouvrez la section Conversion.</sys:String>
+    <sys:String x:Key="L_Click_Choose_Files_to_select_one_or_more_files" xml:space="preserve">Cliquez sur Choisir des fichiers pour sélectionner un ou plusieurs fichiers.</sys:String>
+    <sys:String x:Key="L_You_can_also_drag_and_drop_files_into_the_selection_area" xml:space="preserve">Vous pouvez aussi déposer vos fichiers dans la zone de sélection.</sys:String>
+    <sys:String x:Key="L_Review_the_selected_files" xml:space="preserve">Vérifiez les fichiers sélectionnés.</sys:String>
+    <sys:String x:Key="L_Remove_individual_files_or_use_Clear_All" xml:space="preserve">Retirez des fichiers individuellement ou utilisez Tout effacer.</sys:String>
+    <sys:String x:Key="L_Choose_JPG_PNG_or_BMP_and_click_Convert_Files" xml:space="preserve">Choisissez JPG, PNG ou BMP, puis cliquez sur Convertir les fichiers.</sys:String>
+    <sys:String x:Key="L_Learn_how_to_find_previous_operation_records" xml:space="preserve">Découvrez comment retrouver les opérations précédentes.</sys:String>
+    <sys:String x:Key="L_Open_the_History_section" xml:space="preserve">Ouvrez la section Historique.</sys:String>
+    <sys:String x:Key="L_Use_the_search_field_to_find_records" xml:space="preserve">Utilisez le champ de recherche pour retrouver vos opérations.</sys:String>
+    <sys:String x:Key="L_Select_All_to_display_every_record" xml:space="preserve">Sélectionnez Toutes pour afficher toutes les opérations.</sys:String>
+    <sys:String x:Key="L_Select_Completed_to_display_successful_records" xml:space="preserve">Sélectionnez Terminée pour afficher les opérations réussies.</sys:String>
+    <sys:String x:Key="L_Select_Failed_to_display_unsuccessful_records" xml:space="preserve">Sélectionnez Échouée pour afficher les opérations échouées.</sys:String>
+    <sys:String x:Key="L_Create_one_ZIP_archive_per_selected_file" xml:space="preserve">Créez une archive ZIP par fichier sélectionné.</sys:String>
+    <sys:String x:Key="L_Open_the_Compress_section" xml:space="preserve">Ouvrez la section Compression.</sys:String>
+    <sys:String x:Key="L_Select_the_file_you_want_to_compress" xml:space="preserve">Sélectionnez le fichier à compresser.</sys:String>
+    <sys:String x:Key="L_Review_the_available_compression_options" xml:space="preserve">Vérifiez les options de compression.</sys:String>
+    <sys:String x:Key="L_Choose_an_output_destination" xml:space="preserve">Choisissez un dossier de destination.</sys:String>
+    <sys:String x:Key="L_Click_Create_ZIP_archives" xml:space="preserve">Cliquez sur Créer les archives ZIP.</sys:String>
+    <sys:String x:Key="L_Encrypt_files_and_restore_them_with_the_original_password" xml:space="preserve">Chiffrez des fichiers et restaurez-les à l’aide du mot de passe d’origine.</sys:String>
+    <sys:String x:Key="L_Open_the_Encrypt_section" xml:space="preserve">Ouvrez la section Chiffrement.</sys:String>
+    <sys:String x:Key="L_Select_the_files_you_want_to_protect" xml:space="preserve">Sélectionnez les fichiers à protéger.</sys:String>
+    <sys:String x:Key="L_Enter_and_confirm_your_password_then_click_Encrypt_Files" xml:space="preserve">Saisissez et confirmez votre mot de passe, puis cliquez sur Chiffrer les fichiers.</sys:String>
+    <sys:String x:Key="L_To_restore_files_select_the_encrypted_files_enter_their_original_password_and_click_Decrypt_Files" xml:space="preserve">Pour restaurer les fichiers, sélectionnez les fichiers .encrypted, saisissez leur mot de passe d’origine et cliquez sur Déchiffrer les fichiers.</sys:String>
+    <sys:String x:Key="L_Choose_another_output_folder_if_a_file_with_the_original_name_already_exists" xml:space="preserve">Choisissez un autre dossier de destination si un fichier du même nom existe déjà.</sys:String>
+    <sys:String x:Key="L_Learn_about_configuring_FileConverter" xml:space="preserve">Découvrez comment configurer FileConverter.</sys:String>
+    <sys:String x:Key="L_Open_Settings_using_the_settings_shortcut" xml:space="preserve">Ouvrez les paramètres à l’aide du raccourci.</sys:String>
+    <sys:String x:Key="L_Review_the_available_preferences" xml:space="preserve">Vérifiez les préférences disponibles.</sys:String>
+    <sys:String x:Key="L_Choose_English_or_French" xml:space="preserve">Choisissez l’anglais ou le français.</sys:String>
+    <sys:String x:Key="L_Choose_Light_or_Dark" xml:space="preserve">Choisissez le thème clair ou sombre.</sys:String>
+    <sys:String x:Key="L_Preferences_are_saved_automatically" xml:space="preserve">Vos préférences sont enregistrées automatiquement.</sys:String>
+    <sys:String x:Key="L_0_image_files_selected" xml:space="preserve">{0} fichier(s) sélectionné(s)</sys:String>
+    <sys:String x:Key="L_0_completed_1_failed" xml:space="preserve">{0} opération(s) réussie(s), {1} échouée(s).</sys:String>
+    <sys:String x:Key="L_Failed_to_translate_0" xml:space="preserve">Échec de la traduction : {0}</sys:String>
+    <sys:String x:Key="L_Follow_Windows">Suivre Windows</sys:String>
+</ResourceDictionary>

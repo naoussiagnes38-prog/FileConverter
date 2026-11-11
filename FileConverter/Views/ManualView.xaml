@@ -1,0 +1,503 @@
+﻿<UserControl x:Class="FileConverter.Views.ManualView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="900"
+             d:DesignWidth="900"
+             Background="{DynamicResource WindowBackgroundBrush}">
+
+    <UserControl.Resources>
+
+        <!-- MANUAL CARDS -->
+
+        <Style x:Key="ManualCard" TargetType="Border">
+            <Setter Property="Background"
+                    Value="{DynamicResource CardBackgroundBrush}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,12,12"/>
+        </Style>
+
+        <!-- TOPIC BUTTONS -->
+
+        <Style x:Key="TopicButton" TargetType="Button">
+            <Setter Property="Background"
+                    Value="{DynamicResource InputBackgroundBrush}"/>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="14,12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
+        </Style>
+
+        <!-- BACK BUTTON -->
+
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="Background"
+                    Value="{DynamicResource SelectedItemBrush}"/>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <!-- ====================================== -->
+        <!-- TOPIC OVERVIEW -->
+        <!-- ====================================== -->
+
+        <ScrollViewer x:Name="OverviewView"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+
+            <StackPanel Margin="30">
+
+                <!-- PAGE HEADER -->
+
+                <TextBlock Text="{DynamicResource L_User_Manual}"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                <TextBlock Text="{DynamicResource L_Learn_how_to_use_FileConverter_with_our_step_by_step_guides}"
+                           FontSize="13"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           Margin="0,7,0,22"/>
+
+                <!-- SEARCH AREA -->
+
+                <Border Background="{DynamicResource ActionBackgroundBrush}"
+                        CornerRadius="12"
+                        Padding="24"
+                        Margin="0,0,0,22">
+
+                    <StackPanel>
+
+                        <TextBlock Text="{DynamicResource L_How_can_we_help_you}"
+                                   FontSize="23"
+                                   FontWeight="SemiBold"
+                                   Foreground="White"/>
+
+                        <TextBlock Text="{DynamicResource L_Search_the_manual_to_find_answers_and_instructions}"
+                                   Foreground="#E4F2E9"
+                                   FontSize="13"
+                                   Margin="0,6,0,15"/>
+
+                        <Border Background="{DynamicResource InputBackgroundBrush}"
+                                CornerRadius="6"
+                                Padding="10">
+
+                            <DockPanel>
+
+                                <TextBlock Text="&#xE721;"
+                                           FontFamily="Segoe MDL2 Assets"
+                                           FontSize="16"
+                                           Foreground="{DynamicResource SecondaryTextBrush}"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,10,0"/>
+
+                                <TextBox x:Name="ManualSearchBox"
+                                         BorderThickness="0"
+                                         FontSize="13"
+                                         Foreground="{DynamicResource PrimaryTextBrush}"
+                                         VerticalContentAlignment="Center"
+                                         TextChanged="ManualSearchBox_TextChanged"
+                                         Height="28"
+                                         Background="Transparent"
+                                         ToolTip="Search manual topics"/>
+
+                            </DockPanel>
+
+                        </Border>
+
+                    </StackPanel>
+
+                </Border>
+
+                <!-- TOPIC SECTION -->
+
+                <TextBlock Text="{DynamicResource L_Browse_Help_Topics}"
+                           FontSize="19"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,0,0,15"/>
+
+                <UniformGrid x:Name="TopicCardsGrid"
+                             Columns="2">
+
+                    <!-- GETTING STARTED -->
+
+                    <Border x:Name="GettingStartedCard"
+                            Style="{StaticResource ManualCard}">
+
+                        <StackPanel>
+
+                            <TextBlock Text="&#xE768;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="25"
+                                       Foreground="{DynamicResource AccentBrush}"/>
+
+                            <TextBlock Text="{DynamicResource L_Getting_Started}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       Margin="0,12,0,5"/>
+
+                            <TextBlock Text="{DynamicResource L_Learn_the_basic_features_and_how_to_navigate_FileConverter}"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                       FontSize="12"/>
+
+                            <Button Content="{DynamicResource L_Read_Guide}"
+                                    Tag="Getting Started"
+                                    Click="TopicButton_Click"
+                                    Style="{StaticResource TopicButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <!-- CONVERSION -->
+
+                    <Border x:Name="FileConversionCard"
+                            Style="{StaticResource ManualCard}">
+
+                        <StackPanel>
+
+                            <TextBlock Text="&#xE8E6;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="25"
+                                       Foreground="{DynamicResource AccentBrush}"/>
+
+                            <TextBlock Text="{DynamicResource L_File_Conversion}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       Margin="0,12,0,5"/>
+
+                            <TextBlock Text="{DynamicResource L_Understand_how_to_select_files_and_prepare_them_for_conversion}"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                       FontSize="12"/>
+
+                            <Button Content="{DynamicResource L_Read_Guide}"
+                                    Tag="File Conversion"
+                                    Click="TopicButton_Click"
+                                    Style="{StaticResource TopicButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <!-- HISTORY -->
+
+                    <Border x:Name="ConversionHistoryCard"
+                            Style="{StaticResource ManualCard}">
+
+                        <StackPanel>
+
+                            <TextBlock Text="&#xE81C;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="25"
+                                       Foreground="{DynamicResource AccentBrush}"/>
+
+                            <TextBlock Text="{DynamicResource L_Conversion_History}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       Margin="0,12,0,5"/>
+
+                            <TextBlock Text="{DynamicResource L_Learn_how_to_search_and_filter_previous_conversion_records}"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                       FontSize="12"/>
+
+                            <Button Content="{DynamicResource L_Read_Guide}"
+                                    Tag="Conversion History"
+                                    Click="TopicButton_Click"
+                                    Style="{StaticResource TopicButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <!-- COMPRESSION -->
+
+                    <Border x:Name="FileCompressionCard"
+                            Style="{StaticResource ManualCard}">
+
+                        <StackPanel>
+
+                            <TextBlock Text="&#xE7B8;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="25"
+                                       Foreground="{DynamicResource AccentBrush}"/>
+
+                            <TextBlock Text="{DynamicResource L_File_Compression}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       Margin="0,12,0,5"/>
+
+                            <TextBlock Text="{DynamicResource L_Discover_how_to_create_ZIP_archives}"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                       FontSize="12"/>
+
+                            <Button Content="{DynamicResource L_Read_Guide}"
+                                    Tag="File Compression"
+                                    Click="TopicButton_Click"
+                                    Style="{StaticResource TopicButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <!-- ENCRYPTION -->
+
+                    <Border x:Name="FileEncryptionCard"
+                            Style="{StaticResource ManualCard}">
+
+                        <StackPanel>
+
+                            <TextBlock Text="&#xE72E;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="25"
+                                       Foreground="{DynamicResource AccentBrush}"/>
+
+                            <TextBlock Text="{DynamicResource L_File_Encryption}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       Margin="0,12,0,5"/>
+
+                            <TextBlock Text="{DynamicResource L_Learn_about_protecting_files_with_encryption}"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                       FontSize="12"/>
+
+                            <Button Content="{DynamicResource L_Read_Guide}"
+                                    Tag="File Encryption"
+                                    Click="TopicButton_Click"
+                                    Style="{StaticResource TopicButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <!-- SETTINGS -->
+
+                    <Border x:Name="ApplicationSettingsCard"
+                            Style="{StaticResource ManualCard}">
+
+                        <StackPanel>
+
+                            <TextBlock Text="&#xE713;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="25"
+                                       Foreground="{DynamicResource AccentBrush}"/>
+
+                            <TextBlock Text="{DynamicResource L_Application_Settings}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       Margin="0,12,0,5"/>
+
+                            <TextBlock Text="{DynamicResource L_Understand_the_available_application_preferences}"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                       FontSize="12"/>
+
+                            <Button Content="{DynamicResource L_Read_Guide}"
+                                    Tag="Application Settings"
+                                    Click="TopicButton_Click"
+                                    Style="{StaticResource TopicButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </UniformGrid>
+
+                <!-- NO SEARCH RESULTS -->
+
+                <TextBlock x:Name="NoResultsText"
+                           Text="{DynamicResource L_No_help_topics_match_your_search_Try_another_keyword}"
+                           FontSize="13"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Margin="0,15,0,20"
+                           Visibility="Collapsed"/>
+
+                <!-- FAQ SECTION -->
+
+                <TextBlock Text="{DynamicResource L_Frequently_Asked_Questions}"
+                           FontSize="19"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,15,0,12"/>
+
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="18">
+
+                    <StackPanel>
+
+                        <TextBlock Text="{DynamicResource L_Where_can_I_find_my_previous_conversions}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   FontSize="13"/>
+
+                        <TextBlock Text="{DynamicResource L_Open_the_History_section_from_the_sidebar_to_view_previous_conversion_records}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   FontSize="12"
+                                   Margin="0,6,0,15"/>
+
+                        <Separator Background="{DynamicResource BorderBrush}"/>
+
+                        <TextBlock Text="{DynamicResource L_Can_I_select_multiple_files}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   FontSize="13"
+                                   Margin="0,15,0,0"/>
+
+                        <TextBlock Text="{DynamicResource L_Yes_The_Convert_screen_supports_selecting_multiple_files_and_adding_files_through_drag_and_drop}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   FontSize="12"
+                                   Margin="0,6,0,15"/>
+
+                        <Separator Background="{DynamicResource BorderBrush}"/>
+
+                        <TextBlock Text="{DynamicResource L_Which_image_formats_can_I_export}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   FontSize="13"
+                                   Margin="0,15,0,0"/>
+
+                        <TextBlock Text="{DynamicResource L_The_Convert_screen_exports_single_frame_images_to_JPG_PNG_or_BMP}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   FontSize="12"
+                                   Margin="0,6,0,0"/>
+
+                    </StackPanel>
+
+                </Border>
+
+                <TextBlock Text="{DynamicResource L_FileConverter_User_Manual}"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="11"
+                           Margin="0,25,0,5"/>
+
+            </StackPanel>
+
+        </ScrollViewer>
+
+        <!-- ====================================== -->
+        <!-- ARTICLE VIEW -->
+        <!-- ====================================== -->
+
+        <ScrollViewer x:Name="ArticleView"
+                      Visibility="Collapsed"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+
+            <StackPanel Margin="30">
+
+                <!-- BACK BUTTON -->
+
+                <Button Content="{DynamicResource L_Back_to_Help_Topics}"
+                        Style="{StaticResource BackButtonStyle}"
+                        Click="BackButton_Click"
+                        Margin="0,0,0,25"/>
+
+                <!-- ARTICLE HEADER -->
+
+                <TextBlock Text="{DynamicResource L_USER_MANUAL}"
+                           FontSize="11"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource AccentBrush}"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock x:Name="ArticleTitle"
+                           Text="{DynamicResource L_Article_Title}"
+                           FontSize="27"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           TextWrapping="Wrap"/>
+
+                <TextBlock x:Name="ArticleDescription"
+                           Text="{DynamicResource L_Article_description}"
+                           FontSize="14"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           TextWrapping="Wrap"
+                           Margin="0,10,0,25"/>
+
+                <Separator Background="{DynamicResource BorderBrush}"
+                           Margin="0,0,0,25"/>
+
+                <!-- ARTICLE STEPS -->
+
+                <TextBlock Text="{DynamicResource L_Step_by_step_guide}"
+                           FontSize="19"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,0,0,18"/>
+
+                <StackPanel x:Name="ArticleStepsPanel"/>
+
+                <!-- ARTICLE FOOTER -->
+
+                <Border Background="{DynamicResource SelectedItemBrush}"
+                        CornerRadius="8"
+                        Padding="16"
+                        Margin="0,20,0,20">
+
+                    <TextBlock Text="{DynamicResource L_You_have_reached_the_end_of_this_guide}"
+                               FontSize="12"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
+                               TextWrapping="Wrap"/>
+
+                </Border>
+
+                <Button Content="{DynamicResource L_Back_to_Help_Topics}"
+                        Style="{StaticResource BackButtonStyle}"
+                        Click="BackButton_Click"
+                        Margin="0,0,0,20"/>
+
+                <TextBlock Text="{DynamicResource L_FileConverter_User_Manual}"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="11"
+                           Margin="0,10,0,5"/>
+
+            </StackPanel>
+
+        </ScrollViewer>
+
+    </Grid>
+
+</UserControl>
