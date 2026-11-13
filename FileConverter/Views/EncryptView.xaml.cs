@@ -290,13 +290,13 @@ namespace FileConverter.Views
                         string outputName = decrypt ? name.Substring(0, name.Length - suffix.Length) : name + suffix;
                         return Path.Combine(custom ? outputFolder : Path.GetDirectoryName(file), outputName);
                     },
-                    (file, output) =>
+                    (file, output, progress) =>
                     {
                         if (decrypt)
-                            service.DecryptFile(file, output, password);
+                            service.DecryptFile(file, output, password, progress);
                         else
-                            service.EncryptFile(file, output, password);
-                    });
+                            service.EncryptFile(file, output, password, progress);
+                    }, percent => OperationProgress.Value = percent);
             }
             finally
             {

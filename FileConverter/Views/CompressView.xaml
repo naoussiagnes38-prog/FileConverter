@@ -12,10 +12,10 @@
 
         <!-- PRIMARY ACTION BUTTON -->
 
-        <Style x:Key="ActionButton" TargetType="Button">
+        <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Background"
                     Value="{DynamicResource ActionBackgroundBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource ActionTextBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="18,11"/>
             <Setter Property="FontSize" Value="13"/>
@@ -25,7 +25,7 @@
 
         <!-- SECONDARY BUTTON -->
 
-        <Style x:Key="SecondaryButton" TargetType="Button">
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Background"
                     Value="{DynamicResource InputBackgroundBrush}"/>
             <Setter Property="Foreground"
@@ -60,7 +60,7 @@
             <!-- UPLOAD AREA -->
 
             <Border x:Name="DropZone"
-                    Background="{DynamicResource ActionBackgroundBrush}"
+                    Background="{DynamicResource UploadSurfaceBrush}" BorderBrush="{DynamicResource InputBorderBrush}" BorderThickness="1"
                     CornerRadius="12"
                     Padding="25"
                     Margin="0,0,0,22"
@@ -73,19 +73,19 @@
                     <TextBlock Text="&#xE896;"
                                FontFamily="Segoe MDL2 Assets"
                                FontSize="38"
-                               Foreground="White"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,12"/>
 
                     <TextBlock Text="{DynamicResource L_Drag_and_drop_your_files_here}"
                                FontSize="20"
                                FontWeight="SemiBold"
-                               Foreground="White"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
                                HorizontalAlignment="Center"/>
 
                     <TextBlock Text="{DynamicResource L_Or_select_files_from_your_computer}"
                                FontSize="12"
-                               Foreground="#E4F2E9"
+                               Foreground="{DynamicResource SecondaryTextBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,8,0,18"/>
 
@@ -96,7 +96,7 @@
 
                     <TextBlock Text="{DynamicResource L_Multiple_file_selection_is_supported}"
                                FontSize="11"
-                               Foreground="#E4F2E9"
+                               Foreground="{DynamicResource SecondaryTextBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,15,0,0"/>
 
@@ -367,6 +367,14 @@
                     </Grid>
 
                     <!-- ORIGINAL FILES -->
+
+                    <DockPanel Margin="0,0,0,6">
+                        <TextBlock DockPanel.Dock="Right" Margin="10,0,0,0" MinWidth="40" TextAlignment="Right"
+                                   FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Text="{Binding Value, ElementName=OperationProgress, StringFormat={}{0:0}%}"/>
+                        <ProgressBar x:Name="OperationProgress" Height="8" Maximum="100" VerticalAlignment="Center"
+                                     AutomationProperties.Name="{DynamicResource L_Overall_progress}"/>
+                    </DockPanel>
 
                     <Button Content="{DynamicResource L_Create_ZIP_archives}" Click="CompressFiles_Click"
                             Style="{StaticResource SecondaryButton}" Padding="16,8"/>

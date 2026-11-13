@@ -11,13 +11,13 @@
     <!-- Text -->
     <SolidColorBrush x:Key="PrimaryTextBrush" Color="#26332D"/>
     <SolidColorBrush x:Key="SecondaryTextBrush" Color="#56665C"/>
-    <SolidColorBrush x:Key="DisabledTextBrush" Color="#AAB4AE"/>
+    <SolidColorBrush x:Key="DisabledTextBrush" Color="#5F7167"/>
 
     <!-- Borders -->
     <SolidColorBrush x:Key="BorderBrush" Color="#E5EBE7"/>
 
     <!-- Accent colors -->
-    <SolidColorBrush x:Key="AccentBrush" Color="#16834A"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="#116B3B"/>
     <SolidColorBrush x:Key="AccentHoverBrush" Color="#116B3B"/>
     <SolidColorBrush x:Key="SelectedItemBrush" Color="#E6F4EC"/>
 
@@ -27,5 +27,10 @@
     <SolidColorBrush x:Key="InputBorderBrush" Color="#75847A"/>
 
     <SolidColorBrush x:Key="ActionBackgroundBrush" Color="#116B3B"/>
+
+    <SolidColorBrush x:Key="ErrorTextBrush" Color="#9D2D30"/>
+    <SolidColorBrush x:Key="UploadSurfaceBrush" Color="#F1F7F3"/>
+    <SolidColorBrush x:Key="HoverSurfaceBrush" Color="#C9E7D4"/>
+    <SolidColorBrush x:Key="ActionTextBrush" Color="#FFFFFF"/>
 
 </ResourceDictionary>

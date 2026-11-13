@@ -22,7 +22,8 @@ namespace FileConverter.Core.Services
         public void EncryptFile(
             string inputFile,
             string outputFile,
-            string password)
+            string password,
+            Action<double> progress = null)
         {
             ValidateArguments(inputFile, outputFile, password);
 
@@ -70,13 +71,23 @@ namespace FileConverter.Core.Services
                     output.Write(salt, 0, salt.Length);
                     output.Write(iv, 0, iv.Length);
 
+                    long inputLength = Math.Max(1, input.Length);
                     using (var crypto = new CryptoStream(input, encryptor, CryptoStreamMode.Read))
-                        crypto.CopyTo(output);
+                    {
+                        byte[] buffer = new byte[81920];
+                        int count;
+                        while ((count = crypto.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            output.Write(buffer, 0, count);
+                            progress?.Invoke(0.5 * input.Position / inputLength);
+                        }
+                    }
 
                     output.Position = 0;
                     using (var hmac = new HMACSHA256(authenticationKey))
                     {
-                        byte[] tag = hmac.ComputeHash(output);
+                        byte[] tag = ComputeHmacWithoutTag(output, output.Length, hmac,
+                            fraction => progress?.Invoke(0.5 + 0.5 * fraction));
                         output.Write(tag, 0, tag.Length);
                         ClearKey(tag);
                     }
@@ -100,7 +111,8 @@ namespace FileConverter.Core.Services
         public void DecryptFile(
             string inputFile,
             string outputFile,
-            string password)
+            string password,
+            Action<double> progress = null)
         {
             ValidateArguments(inputFile, outputFile, password);
 
@@ -150,7 +162,7 @@ namespace FileConverter.Core.Services
                     using (var hmac = new HMACSHA256(authenticationKey))
                     {
                         byte[] calculatedTag = ComputeHmacWithoutTag(
-                            input, dataOffset + cipherLength, hmac);
+                            input, dataOffset + cipherLength, hmac, fraction => progress?.Invoke(0.5 * fraction));
                         if (!ConstantTimeEquals(calculatedTag, storedTag))
                             throw new CryptographicException(
                                 "Incorrect password or the encrypted file has been modified.");
@@ -165,6 +177,7 @@ namespace FileConverter.Core.Services
                         using (var crypto = new CryptoStream(output, decryptor, CryptoStreamMode.Write))
                         {
                             byte[] buffer = new byte[8192];
+                            long totalCipherBytes = cipherLength;
                             while (cipherLength > 0)
                             {
                                 int count = input.Read(buffer, 0, (int)Math.Min(buffer.Length, cipherLength));
@@ -172,6 +185,7 @@ namespace FileConverter.Core.Services
                                     throw new EndOfStreamException();
                                 crypto.Write(buffer, 0, count);
                                 cipherLength -= count;
+                                progress?.Invoke(1 - 0.5 * cipherLength / totalCipherBytes);
                             }
                         }
                     }
@@ -264,7 +278,8 @@ namespace FileConverter.Core.Services
         private static byte[] ComputeHmacWithoutTag(
             Stream input,
             long bytesToHash,
-            HMACSHA256 hmac)
+            HMACSHA256 hmac,
+            Action<double> progress)
         {
             byte[] buffer = new byte[8192];
 
@@ -290,6 +305,7 @@ namespace FileConverter.Core.Services
                     0);
 
                 remaining -= bytesRead;
+                progress?.Invoke(1 - (double)remaining / bytesToHash);
             }
 
             hmac.TransformFinalBlock(

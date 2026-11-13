@@ -86,12 +86,6 @@
                                Foreground="{DynamicResource PrimaryTextBrush}"
                                Margin="0,18,0,8"/>
 
-                    <RadioButton x:Name="SystemThemeRadio"
-                                 GroupName="ThemeGroup"
-                                 Content="{DynamicResource L_Follow_Windows}"
-                                 Style="{StaticResource OptionRadioButton}"
-                                 Checked="ThemeOption_Checked"/>
-
                     <RadioButton x:Name="LightThemeRadio"
                                  GroupName="ThemeGroup"
                                  Content="Light"
@@ -139,12 +133,6 @@
                                FontSize="14"
                                Foreground="{DynamicResource PrimaryTextBrush}"
                                Margin="0,18,0,8"/>
-
-                    <RadioButton x:Name="SystemLanguageRadio"
-                                 GroupName="LanguageGroup"
-                                 Content="{DynamicResource L_Follow_Windows}"
-                                 Style="{StaticResource OptionRadioButton}"
-                                 Checked="LanguageOption_Checked"/>
 
                     <RadioButton x:Name="EnglishRadio"
                                  GroupName="LanguageGroup"

@@ -27,20 +27,37 @@ namespace FileConverter.Views
         {
             InitializeComponent();
 
-            historyView =
-                CollectionViewSource.GetDefaultView(new ObservableCollection<HistoryItem>(History));
+            historyView = new ListCollectionView(History);
 
             historyView.Filter = FilterHistory;
 
             HistoryDataGrid.ItemsSource = historyView;
+            HistoryDataGrid.SelectedIndex = History.Count > 0 ? 0 : -1;
 
-            TotalCount.Text = History.Count.ToString();
-            SuccessCount.Text = History.Count(item => item.Status == "Completed").ToString();
-            FailureCount.Text = History.Count(item => item.Status == "Failed").ToString();
+            UpdateCounts();
+            Loaded += (sender, args) =>
+            {
+                History.CollectionChanged += History_CollectionChanged;
+                UpdateCounts();
+            };
+            Unloaded += (sender, args) => History.CollectionChanged -= History_CollectionChanged;
+
             foreach (var column in HistoryDataGrid.Columns)
                 column.Header = LocalizationManager.Text(column.Header.ToString());
 
             UpdateFilterButtons();
+        }
+
+        private void History_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdateCounts();
+        }
+
+        private void UpdateCounts()
+        {
+            TotalCount.Text = History.Count.ToString();
+            SuccessCount.Text = History.Count(item => item.Status == "Completed").ToString();
+            FailureCount.Text = History.Count(item => item.Status == "Failed").ToString();
         }
 
         internal static void Record(string input, string output, bool success)
@@ -48,8 +65,10 @@ namespace FileConverter.Views
             History.Insert(0, new HistoryItem
             {
                 FileName = Path.GetFileName(input),
+                InputPath = input,
+                OutputPath = success ? output : null,
                 InputFormat = Path.GetExtension(input).TrimStart('.').ToUpperInvariant(),
-                OutputFormat = (Path.GetExtension(output) ?? "").TrimStart('.').ToUpperInvariant(),
+                OutputFormat = success ? (Path.GetExtension(output) ?? "").TrimStart('.').ToUpperInvariant() : "",
                 Date = DateTime.Now.ToString("g"),
                 Status = success ? "Completed" : "Failed"
             });
@@ -60,6 +79,7 @@ namespace FileConverter.Views
                 var document = new XDocument(new XElement("History", History.Select(item =>
                     new XElement("Entry", new XElement("File", item.FileName),
                         new XElement("Input", item.InputFormat), new XElement("Output", item.OutputFormat),
+                        new XElement("InputPath", item.InputPath), new XElement("OutputPath", item.OutputPath),
                         new XElement("Date", item.Date), new XElement("Status", item.Status)))));
                 string temp = HistoryPath + "." + Guid.NewGuid().ToString("N") + ".tmp";
                 try
@@ -88,6 +108,8 @@ namespace FileConverter.Views
                     XDocument.Load(HistoryPath).Root.Elements("Entry").Select(item => new HistoryItem
                     {
                         FileName = (string)item.Element("File") ?? "",
+                        InputPath = (string)item.Element("InputPath"),
+                        OutputPath = (string)item.Element("OutputPath"),
                         InputFormat = (string)item.Element("Input") ?? "",
                         OutputFormat = (string)item.Element("Output") ?? "",
                         Date = (string)item.Element("Date") ?? "",
@@ -132,13 +154,13 @@ namespace FileConverter.Views
 
                 ||
 
-                historyItem.InputFormat.IndexOf(
+                historyItem.DisplayInput.IndexOf(
                     searchText,
                     StringComparison.OrdinalIgnoreCase) >= 0
 
                 ||
 
-                historyItem.OutputFormat.IndexOf(
+                historyItem.DisplayOutput.IndexOf(
                     searchText,
                     StringComparison.OrdinalIgnoreCase) >= 0;
         }
@@ -224,6 +246,12 @@ namespace FileConverter.Views
     public class HistoryItem
     {
         public string FileName { get; set; }
+
+        public string InputPath { get; set; }
+        public string OutputPath { get; set; }
+        public string DisplayInput { get { return string.IsNullOrEmpty(InputPath) ? InputFormat : InputPath; } }
+        public string DisplayOutput { get { return Status == "Failed" ? LocalizationManager.Text("No output file") :
+            string.IsNullOrEmpty(OutputPath) ? OutputFormat : OutputPath; } }
 
         public string InputFormat { get; set; }
 

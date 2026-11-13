@@ -12,5 +12,11 @@ namespace FileConverter
 
             base.OnStartup(e);
         }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            LocalTranslationServer.Stop();
+            base.OnExit(e);
+        }
     }
 }

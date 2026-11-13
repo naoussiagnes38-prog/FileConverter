@@ -67,7 +67,8 @@ namespace FileConverter.Views
                     "You can also drag and drop files into the selection area.",
                     "Review the selected files.",
                     "Remove individual files or use Clear All.",
-                    "Choose JPG, PNG or BMP and click Convert Files."
+                    "Choose the conversion method that matches your files, then click Convert Files.",
+                    "Word and Excel conversions use the locally installed Office apps. PDF to images uses Poppler."
                 }
             });
 

@@ -17,7 +17,7 @@
 
     <Window.Resources>
 
-        <Style x:Key="NavigationButton" TargetType="Button">
+        <Style x:Key="NavigationButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Height" Value="48"/>
             <Setter Property="Margin" Value="10,4"/>
             <Setter Property="Padding" Value="15,0"/>

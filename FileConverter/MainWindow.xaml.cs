@@ -8,6 +8,10 @@ namespace FileConverter
 {
     public partial class MainWindow : Window
     {
+        private ConvertView conversionView;
+        private TranslateView translationView;
+        private CompressView compressionView;
+        private EncryptView encryptionView;
         private bool sidebarExpanded = true;
         private string currentTitle;
 
@@ -16,7 +20,7 @@ namespace FileConverter
             InitializeComponent();
 
             NavigateTo(
-                new ConvertView(),
+                conversionView ?? (conversionView = new ConvertView()),
                 "Convert",
                 ConvertButton);
         }
@@ -127,7 +131,7 @@ namespace FileConverter
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
             NavigateTo(
-                new ConvertView(),
+                conversionView ?? (conversionView = new ConvertView()),
                 "Convert",
                 ConvertButton);
         }
@@ -136,7 +140,7 @@ namespace FileConverter
         private void Translate_Click(object sender, RoutedEventArgs e)
         {
             NavigateTo(
-                new TranslateView(),
+                translationView ?? (translationView = new TranslateView()),
                 "Translate",
                 TranslateButton);
         }
@@ -163,7 +167,7 @@ namespace FileConverter
         private void Compress_Click(object sender, RoutedEventArgs e)
         {
             NavigateTo(
-                new CompressView(),
+                compressionView ?? (compressionView = new CompressView()),
                 "Compress",
                 CompressButton);
         }
@@ -172,7 +176,7 @@ namespace FileConverter
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
             NavigateTo(
-                new EncryptView(),
+                encryptionView ?? (encryptionView = new EncryptView()),
                 "Encrypt",
                 EncryptButton);
         }

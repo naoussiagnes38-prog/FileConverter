@@ -1,251 +1,161 @@
 ﻿<UserControl x:Class="FileConverter.Views.ConvertView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d"
-             d:DesignHeight="650"
-             d:DesignWidth="850"
-             Background="{DynamicResource WindowBackgroundBrush}">
-
+             xmlns:controls="clr-namespace:FileConverter.Controls"
+             Background="{DynamicResource WindowBackgroundBrush}"
+             Foreground="{DynamicResource PrimaryTextBrush}">
     <UserControl.Resources>
-
-        <Style x:Key="ActionButton" TargetType="Button">
-            <Setter Property="Background" Value="{DynamicResource ActionBackgroundBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="18,10"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Cursor" Value="Hand"/>
+        <Style x:Key="ConversionCard" TargetType="RadioButton">
+            <Setter Property="Margin" Value="0,0,8,8"/>
+            <Setter Property="Width" Value="148"/>
+            <Setter Property="MinHeight" Value="46"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Card" Padding="9,6" CornerRadius="7" BorderThickness="1"
+                                BorderBrush="{DynamicResource InputBorderBrush}"
+                                Background="{DynamicResource CardBackgroundBrush}">
+                            <DockPanel>
+                                <TextBlock x:Name="Mark" DockPanel.Dock="Right" Margin="6,0,0,0"
+                                           VerticalAlignment="Center" Text="○"/>
+                                <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                            </DockPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Card" Property="Background" Value="{DynamicResource SelectedItemBrush}"/>
+                                <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter TargetName="Mark" Property="Text" Value="✓"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter TargetName="Card" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
-
+        <Style x:Key="ConversionAction" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        </Style>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="16">
+            <TextBlock Text="{DynamicResource L_Convert_files_heading}" FontSize="25" FontWeight="SemiBold"/>
+            <TextBlock Text="{DynamicResource L_Choose_a_conversion_and_add_one_or_more_files}" TextWrapping="Wrap"
+                       Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,5,0,16"/>
 
-        <!-- PAGE INTRODUCTION -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,20">
-
-            <TextBlock Text="{DynamicResource L_Convert_images}"
-                       FontSize="25"
-                       FontWeight="Bold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"/>
-
-            <TextBlock Text="{DynamicResource L_Convert_single_frame_images_to_JPG_PNG_or_BMP}"
-                       FontSize="13"
-                       Foreground="{DynamicResource SecondaryTextBrush}"
-                       Margin="0,7,0,0"/>
-
-        </StackPanel>
-
-        <!-- FILE DROP AREA -->
-        <Border Grid.Row="1"
-                x:Name="DropZone"
-                AllowDrop="True"
-                DragEnter="DropZone_DragEnter"
-                DragLeave="DropZone_DragLeave"
-                Drop="DropZone_Drop"
-                Background="{DynamicResource CardBackgroundBrush}"
-                BorderBrush="{DynamicResource AccentBrush}"
-                BorderThickness="2"
-                CornerRadius="10"
-                Padding="25"
-                Margin="0,0,0,20">
-
-            <StackPanel HorizontalAlignment="Center">
-
-                <TextBlock Text="☁"
-                           FontSize="42"
-                           Foreground="{DynamicResource AccentBrush}"
-                           HorizontalAlignment="Center"/>
-
-                <TextBlock Text="{DynamicResource L_Drop_your_files_here}"
-                           FontSize="19"
-                           FontWeight="SemiBold"
-                           Foreground="{DynamicResource PrimaryTextBrush}"
-                           HorizontalAlignment="Center"
-                           Margin="0,10,0,5"/>
-
-                <TextBlock Text="{DynamicResource L_You_can_select_or_drop_multiple_files}"
-                           Foreground="{DynamicResource SecondaryTextBrush}"
-                           FontSize="12"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,15"/>
-
-                <Button Content="{DynamicResource L_Choose_Files}"
-                        Style="{StaticResource ActionButton}"
-                        Click="ChooseFiles_Click"
-                        HorizontalAlignment="Center"/>
-
+            <TextBlock Text="{DynamicResource L_Choose_a_conversion}" FontSize="17" FontWeight="SemiBold"
+                       Margin="0,16,0,8"/>
+            <WrapPanel>
+                <RadioButton Tag="WordToPdf" Content="{DynamicResource L_Word_to_PDF}" GroupName="Conversion"
+                             Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                <RadioButton Tag="ImageToPdf" Content="{DynamicResource L_Image_to_PDF}" GroupName="Conversion"
+                             Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                <RadioButton Tag="ExcelToPdf" Content="{DynamicResource L_Excel_to_PDF}" GroupName="Conversion"
+                             Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                <RadioButton Tag="PdfToWord" Content="{DynamicResource L_PDF_to_Word}" GroupName="Conversion"
+                             Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                <RadioButton Tag="PdfToImages" Content="{DynamicResource L_PDF_to_images}" GroupName="Conversion"
+                             Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                <RadioButton Tag="MergePdf" Content="{DynamicResource L_Merge_into_one_PDF}" GroupName="Conversion"
+                             Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+            </WrapPanel>
+            <Expander Header="{DynamicResource L_Image_export_formats}" Margin="0,0,0,8">
+                <WrapPanel Margin="0,8,0,0">
+                    <RadioButton Tag="Jpg" Content="JPG" GroupName="Conversion" Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                    <RadioButton Tag="Png" Content="PNG" GroupName="Conversion" Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                    <RadioButton Tag="Bmp" Content="BMP" GroupName="Conversion" Style="{StaticResource ConversionCard}" Checked="Method_Checked"/>
+                </WrapPanel>
+            </Expander>
+            <StackPanel x:Name="QualityOptions" Orientation="Horizontal" Visibility="Collapsed" Margin="0,0,0,10">
+                <TextBlock Text="{DynamicResource L_JPEG_quality}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <Slider x:Name="ImageQuality" Minimum="10" Maximum="100" Value="85" TickFrequency="5"
+                        IsSnapToTickEnabled="True" Width="115" VerticalAlignment="Center"
+                        AutomationProperties.Name="{DynamicResource L_JPEG_quality}"/>
+                <TextBlock Text="{Binding Value, ElementName=ImageQuality, StringFormat={}{0:0}%}"
+                           VerticalAlignment="Center" Margin="8,0,0,0"/>
             </StackPanel>
-        </Border>
 
-        <!-- SELECTED FILES -->
-        <Border Grid.Row="2"
-                Background="{DynamicResource CardBackgroundBrush}"
-                BorderBrush="{DynamicResource BorderBrush}"
-                BorderThickness="1"
-                CornerRadius="10"
-                Padding="15">
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <!-- FILE LIST HEADER -->
-                <Grid Grid.Row="0" Margin="0,0,0,12">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel>
-                        <TextBlock Text="{DynamicResource L_Selected_files}"
-                                   FontSize="16"
-                                   FontWeight="SemiBold"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
-
-                        <TextBlock x:Name="FileCountText"
-                                   Text="{DynamicResource L_0_files_selected}"
-                                   FontSize="11"
-                                   Foreground="{DynamicResource SecondaryTextBrush}"
-                                   Margin="0,4,0,0"/>
+            <TextBlock Text="{DynamicResource L_Upload_files}" FontSize="17" FontWeight="SemiBold"
+                       Margin="0,12,0,8"/>
+            <Border x:Name="DropZone" AllowDrop="True" CornerRadius="8" MinHeight="158"
+                    Background="{DynamicResource UploadSurfaceBrush}"
+                    DragEnter="DropZone_DragEnter" DragOver="DropZone_DragEnter"
+                    DragLeave="DropZone_DragLeave" Drop="DropZone_Drop">
+                <Grid>
+                    <Rectangle RadiusX="8" RadiusY="8" Stroke="{DynamicResource InputBorderBrush}"
+                               StrokeDashArray="4 3" IsHitTestVisible="False"/>
+                    <StackPanel Margin="14" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE898;" FontFamily="Segoe MDL2 Assets" FontSize="27"
+                                   Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                        <TextBlock Text="{DynamicResource L_Drop_your_files_here}" FontWeight="SemiBold"
+                                   TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,4"/>
+                        <TextBlock Text="{DynamicResource L_Or_select_files_from_your_computer}"
+                                   Foreground="{DynamicResource SecondaryTextBrush}" TextWrapping="Wrap"
+                                   TextAlignment="Center" Margin="0,0,0,10"/>
+                        <Button Content="{DynamicResource L_Choose_Files}" Click="ChooseFiles_Click"
+                                HorizontalAlignment="Center" Background="{DynamicResource ActionBackgroundBrush}"
+                                Foreground="{DynamicResource ActionTextBrush}"/>
                     </StackPanel>
-
-                    <Button Grid.Column="1"
-                            Content="{DynamicResource L_Clear_all}"
-                            Click="ClearFiles_Click"
-                            Background="Transparent"
-                            Foreground="#B64A4A"
-                            BorderThickness="0"
-                            Cursor="Hand"/>
-
                 </Grid>
+            </Border>
 
-                <!-- FILE LIST -->
-                <Border Grid.Row="1"
-                        Background="{DynamicResource InputBackgroundBrush}"
-                        BorderBrush="{DynamicResource BorderBrush}"
-                        BorderThickness="1"
-                        CornerRadius="6">
+            <DockPanel Margin="0,7,0,8">
+                <Button x:Name="ClearFilesButton" DockPanel.Dock="Right" Content="{DynamicResource L_Clear_all}"
+                        Style="{StaticResource ConversionAction}" Click="ClearFiles_Click"/>
+                <TextBlock x:Name="FileCountText" VerticalAlignment="Center" FontWeight="SemiBold"/>
+            </DockPanel>
+            <ItemsControl x:Name="FileList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="9" CornerRadius="6" Margin="0,0,0,6" BorderThickness="1"
+                                BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource CardBackgroundBrush}">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <Button Content="{DynamicResource L_Open_output}" Tag="{Binding OutputPath}"
+                                            IsEnabled="{Binding HasOutput}" Click="OpenOutput_Click"
+                                            Style="{StaticResource ConversionAction}" Margin="6,0"/>
+                                    <Button Content="×" Tag="{Binding}" Click="RemoveFile_Click"
+                                            AutomationProperties.Name="{DynamicResource L_Remove}"
+                                            Style="{StaticResource ConversionAction}"/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding FileName}" ToolTip="{Binding FilePath}"
+                                               FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding StatusText}" TextWrapping="Wrap" Margin="0,3,0,3"
+                                               Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                    <ProgressBar Height="5" Maximum="100" Value="{Binding Progress, Mode=OneWay}"
+                                                 IsIndeterminate="{Binding IsWorking, Mode=OneWay}"
+                                                 Foreground="{DynamicResource AccentBrush}"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <controls:OutputLocationPicker x:Name="OutputLocation" Margin="0,8,0,0"/>
 
-                        <ItemsControl x:Name="FileList" Margin="8">
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-
-                                    <Border Background="{DynamicResource SurfaceBackgroundBrush}"
-                                            BorderBrush="{DynamicResource BorderBrush}"
-                                            BorderThickness="1"
-                                            CornerRadius="6"
-                                            Padding="10"
-                                            Margin="0,3">
-
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="100"/>
-                                                <ColumnDefinition Width="75"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <StackPanel Grid.Column="0"
-                                                        VerticalAlignment="Center">
-
-                                                <TextBlock Text="{Binding FileName}"
-                                                           FontWeight="SemiBold"
-                                                           Foreground="{DynamicResource PrimaryTextBrush}"
-                                                           TextTrimming="CharacterEllipsis"/>
-
-                                                <TextBlock Text="{Binding Extension}"
-                                                           FontSize="11"
-                                                           Foreground="{DynamicResource SecondaryTextBrush}"
-                                                           Margin="0,3,0,0"/>
-
-                                            </StackPanel>
-
-                                            <TextBlock Grid.Column="1"
-                                                       Text="{Binding FormattedSize}"
-                                                       VerticalAlignment="Center"
-                                                       Foreground="{DynamicResource SecondaryTextBrush}"/>
-
-                                            <TextBlock Grid.Column="2"
-                                                       Text="{Binding Status}"
-                                                       VerticalAlignment="Center"
-                                                       Foreground="{DynamicResource AccentBrush}"/>
-
-                                            <Button Grid.Column="3"
-                                                    Content="✕"
-                                                    Tag="{Binding}"
-                                                    Click="RemoveFile_Click"
-                                                    Background="Transparent"
-                                                    Foreground="#B64A4A"
-                                                    BorderThickness="0"
-                                                    Cursor="Hand"/>
-
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Border>
-
-                <!-- OUTPUT FORMAT -->
-                <StackPanel Grid.Row="2" Margin="0,15,0,0">
-
-                    <TextBlock Text="{DynamicResource L_Output_format}"
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextBrush}"
-                               Margin="0,0,0,7"/>
-
-                    <ComboBox x:Name="OutputFormatCombo"
-                              Height="36"
-                              Padding="8"
-                              Background="{DynamicResource InputBackgroundBrush}"
-                              Foreground="{DynamicResource PrimaryTextBrush}"
-                              BorderBrush="{DynamicResource InputBorderBrush}"
-                              SelectedIndex="0">
-
-                        <ComboBoxItem Content="{DynamicResource L_Select_format}"
-                                      IsEnabled="False"/>
-                        
-                        <ComboBoxItem Content="JPG"/>
-                        <ComboBoxItem Content="PNG"/>
-                        <ComboBoxItem Content="BMP"/>
-                        
-                        
-                        
-                        
-                        
-
-                    </ComboBox>
-                </StackPanel>
-
-            </Grid>
-        </Border>
-
-        <!-- CONVERT BUTTON -->
-        <Button Grid.Row="3"
-                Content="{DynamicResource L_Convert_Files}" Click="ConvertFiles_Click"
-                Style="{StaticResource ActionButton}"
-                Height="45"
-                Margin="0,15,0,0"
-                HorizontalAlignment="Right"
-                IsEnabled="False"/>
-
-    </Grid>
+            <TextBlock x:Name="BatchStatus" Margin="0,8,0,5" TextWrapping="Wrap"/>
+            <DockPanel Margin="0,0,0,6">
+                <TextBlock DockPanel.Dock="Right" Margin="10,0,0,0" MinWidth="40" TextAlignment="Right"
+                           FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}"
+                           Text="{Binding Value, ElementName=OverallProgress, StringFormat={}{0:0}%}"/>
+                <ProgressBar x:Name="OverallProgress" Height="8" Maximum="100" VerticalAlignment="Center"
+                             AutomationProperties.Name="{DynamicResource L_Overall_progress}"/>
+            </DockPanel>
+            <Button x:Name="ConvertButton" Content="{DynamicResource L_Convert_Files}"
+                    HorizontalAlignment="Left" Click="ConvertFiles_Click"
+                    Background="{DynamicResource ActionBackgroundBrush}" Foreground="{DynamicResource ActionTextBrush}"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

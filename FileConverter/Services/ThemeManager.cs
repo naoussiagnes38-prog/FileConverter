@@ -71,24 +71,17 @@ namespace FileConverter.Services
                 }
             }
 
-            // Remove only the existing application theme dictionaries.
-            for (int i =
-                Application.Current.Resources.MergedDictionaries.Count - 1;
-                i >= 0;
-                i--)
+            var dictionaries = Application.Current.Resources.MergedDictionaries;
+            for (int index = dictionaries.Count - 1; index >= 0; index--)
             {
-                ResourceDictionary dictionary =
-                    Application.Current.Resources.MergedDictionaries[i];
-
-                if (IsThemeDictionary(dictionary))
+                if (IsThemeDictionary(dictionaries[index]))
                 {
-                    Application.Current.Resources.MergedDictionaries.RemoveAt(i);
+                    dictionaries[index] = newDictionary;
+                    return;
                 }
             }
 
-            // Add the new theme without removing other resource dictionaries.
-            Application.Current.Resources.MergedDictionaries.Add(
-                newDictionary);
+            dictionaries.Add(newDictionary);
         }
 
         private static bool IsThemeDictionary(

@@ -9,7 +9,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using System.Configuration;
-using System.Diagnostics;
+using System.Net.Http;
+using UglyToad.PdfPig;
+using UglyToad.PdfPig.DocumentLayoutAnalysis.TextExtractor;
 using System.IO.Compression;
 using System.Text;
 using System.Threading.Tasks;
@@ -154,9 +156,12 @@ namespace FileConverter.Views
 
                 item.FullPath = fileInfo.FullName;
                 item.FileName = fileInfo.Name;
-                item.FileInformation = fileInfo.Extension.ToUpperInvariant() + " · " + GetFileSize(fileInfo.Length);
+                item.FileInformation = fileInfo.Extension.ToUpperInvariant();
+                try { item.FileInformation += " · " + GetFileSize(fileInfo.Length); }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
                 item.DetectedLanguage = LocalizationManager.Text("Not detected");
-                item.TranslationDirection = LocalizationManager.Text("Pending");
+                item.DetectedSourceLanguage = null;
                 item.Status = LocalizationManager.Text("Queued");
 
                 selectedFiles.Add(item);
@@ -188,23 +193,30 @@ namespace FileConverter.Views
                 return;
 
             IsEnabled = false;
+            DocumentProgress.Value = 0;
+            ProgressPanel.Visibility = Visibility.Visible;
             try
             {
-                foreach (var item in added)
+                for (int index = 0; index < added.Count; index++)
                 {
+                    var item = added[index];
+                    ShowDocumentProgress(item, index + 1, added.Count, "Detecting language...");
                     try
                     {
                         await InspectDocumentAsync(item);
-                        item.Status = LocalizationManager.Text("Queued");
+                        item.Status = LocalizationManager.Text(item.EffectiveTargetLanguage == null
+                            ? "Choose English or French as the target language." : "Queued");
                     }
                     catch (Exception ex)
                     {
                         item.Status = ex.Message;
                     }
+                    DocumentProgress.Value = Math.Floor(100.0 * (index + 1) / added.Count);
                 }
             }
             finally
             {
+                ProgressPanel.Visibility = Visibility.Collapsed;
                 IsEnabled = true;
             }
         }
@@ -319,6 +331,7 @@ namespace FileConverter.Views
             if (result == MessageBoxResult.Yes)
             {
                 selectedFiles.Clear();
+                ProgressPanel.Visibility = Visibility.Collapsed;
                 UpdateFileCount();
             }
         }
@@ -331,44 +344,112 @@ namespace FileConverter.Views
                 return;
             }
 
+            string outputFolder;
+            if (!OutputLocation.TryGetFolder(out outputFolder))
+                return;
+
+            string format = (string)TranslationOutputFormat.SelectedValue ?? "txt";
+            TranslationNotice.Visibility = Visibility.Collapsed;
             IsEnabled = false;
+            DocumentProgress.Value = 0;
+            ProgressPanel.Visibility = Visibility.Visible;
             try
             {
-                using (var service = new LanguageDetectionService(
-                    new Uri(ConfigurationManager.AppSettings["TranslationEndpoint"])))
+                var endpoint = new Uri(ConfigurationManager.AppSettings["TranslationEndpoint"]);
+                bool engineReady = false;
+                int completed = 0;
+                int failed = 0;
+                int skipped = 0;
+                using (var service = new LanguageDetectionService(endpoint))
                 {
-                    foreach (var item in selectedFiles.ToList())
+                    for (int index = 0; index < selectedFiles.Count; index++)
                     {
+                        var item = selectedFiles[index];
+                        ShowDocumentProgress(item, index + 1, selectedFiles.Count, "Detecting language...");
                         string output = null;
                         bool success = false;
+                        bool checkingEngine = false;
                         try
                         {
-                            var document = await InspectDocumentAsync(item);
-                            string text = document.Item1;
-                            string source = document.Item2;
-                            string target = source == "en" ? "fr" : "en";
-                            item.Status = LocalizationManager.Text("Translating...");
-                            output = Path.Combine(Path.GetDirectoryName(item.FullPath),
-                                Path.GetFileName(item.FullPath) + "." + target + ".txt");
+                            string text = await InspectDocumentAsync(item);
+                            string target = item.EffectiveTargetLanguage;
+                            if (target == null)
+                            {
+                                item.Status = LocalizationManager.Text("Choose English or French as the target language.");
+                                skipped++;
+                                continue;
+                            }
 
-                            string translated = await service.TranslateAsync(text, source, target);
+                            if (!engineReady)
+                            {
+                                checkingEngine = true;
+                                ProgressLabel.Text = LocalizationManager.Text("Checking the local translation engine...");
+                                try
+                                {
+                                    await LocalTranslationServer.EnsureReadyAsync(service, endpoint, () =>
+                                        ProgressLabel.Text = LocalizationManager.Text("Starting LibreTranslate and loading language models..."));
+                                }
+                                catch (Exception ex)
+                                {
+                                    item.Status = string.Format(LocalizationManager.Text("Failed to translate: {0}"), ex.Message);
+                                    throw;
+                                }
+                                engineReady = true;
+                                checkingEngine = false;
+                            }
+
+                            string source = target == "fr" ? "en" : "fr";
+                            item.Status = LocalizationManager.Text("Translating...");
+                            output = Path.Combine(outputFolder ?? Path.GetDirectoryName(item.FullPath),
+                                Path.GetFileName(item.FullPath) + "." + target + "." + format);
+
+                            ShowDocumentProgress(item, index + 1, selectedFiles.Count, "Translating...");
+                            string translated = await service.TranslateAsync(text, source, target, fraction =>
+                            {
+                                DocumentProgress.Value = Math.Floor(
+                                    100 * (index + Math.Min(fraction, 0.99)) / selectedFiles.Count);
+                            });
+                            ShowDocumentProgress(item, index + 1, selectedFiles.Count, "Saving translation...");
                             output = await Task.Run(() => BatchOperations.WriteOutput(output,
-                                temp => File.WriteAllText(temp, translated, Encoding.UTF8)));
+                                temp => TranslatedDocumentWriter.Write(temp, translated, format)));
                             item.Status = LocalizationManager.Text("Saved: ") + Path.GetFileName(output);
                             success = true;
                         }
-                        catch (Exception ex)
+                        catch (HttpRequestException ex) when (!checkingEngine)
+                        {
+                            item.Status = string.Format(LocalizationManager.Text(
+                                "Lost the connection to LibreTranslate at {0}. {1}"), endpoint,
+                                ex.GetBaseException().Message);
+                        }
+                        catch (TaskCanceledException) when (!checkingEngine)
+                        {
+                            item.Status = LocalizationManager.Text("LibreTranslate did not respond in time.");
+                        }
+                        catch (Exception ex) when (!checkingEngine)
                         {
                             item.Status = string.Format(LocalizationManager.Text("Failed to translate: {0}"), ex.Message);
                         }
+                        finally
+                        {
+                            if (!checkingEngine)
+                                DocumentProgress.Value = Math.Floor(100.0 * (index + 1) / selectedFiles.Count);
+                        }
 
+                        if (success)
+                            completed++;
+                        else
+                            failed++;
                         HistoryView.Record(item.FullPath, output, success);
                     }
+                    ProgressLabel.Text = string.Format(LocalizationManager.Text("{0} completed, {1} failed, {2} skipped."),
+                        completed, failed, skipped);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Translation");
+                ProgressLabel.Text = LocalizationManager.Text("Translation stopped.");
+                TranslationNotice.Text = ex.Message;
+                TranslationNotice.Visibility = Visibility.Visible;
             }
             finally
             {
@@ -376,31 +457,25 @@ namespace FileConverter.Views
             }
         }
 
-        private static async Task<Tuple<string, string>> InspectDocumentAsync(TranslationFileItem item)
+        private static async Task<string> InspectDocumentAsync(TranslationFileItem item)
         {
             item.Status = LocalizationManager.Text("Detecting language...");
             item.DetectedLanguage = LocalizationManager.Text("Not detected");
-            item.TranslationDirection = LocalizationManager.Text("Pending");
+            item.DetectedSourceLanguage = null;
 
             string text = Path.GetExtension(item.FullPath).Equals(".rtf", StringComparison.OrdinalIgnoreCase)
                 ? ReadRtf(item.FullPath)
                 : await Task.Run(() => ReadDocument(item.FullPath));
             if (string.IsNullOrWhiteSpace(text))
-                throw new InvalidDataException("The document has no readable text.");
+                throw new InvalidDataException(Path.GetExtension(item.FullPath).Equals(".pdf", StringComparison.OrdinalIgnoreCase)
+                    ? LocalizationManager.Text("This PDF has no selectable text. Run OCR on scanned pages and try again.")
+                    : "The document has no readable text.");
 
             string source = await Task.Run(() => DocumentLanguageDetector.Detect(text));
-            if (source != "en" && source != "fr")
-            {
-                item.DetectedLanguage = source ?? LocalizationManager.Text("Unknown");
-                throw new InvalidDataException(source == null
-                    ? "There is not enough text to identify the language."
-                    : "Only English and French documents can be translated.");
-            }
-
-            item.DetectedLanguage = LocalizationManager.Text(source == "en" ? "English" : "French");
-            item.TranslationDirection = LocalizationManager.Text(
-                source == "en" ? "English → French" : "French → English");
-            return Tuple.Create(text, source);
+            item.DetectedSourceLanguage = source;
+            item.DetectedLanguage = source == "en" ? LocalizationManager.Text("English") :
+                source == "fr" ? LocalizationManager.Text("French") : source ?? LocalizationManager.Text("Unknown");
+            return text;
         }
 
         private static string ReadRtf(string path)
@@ -432,12 +507,20 @@ namespace FileConverter.Views
                         if (entry == null)
                             throw new InvalidDataException("Missing DOCX document body.");
 
-                        XNamespace word = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
                         using (var input = entry.Open())
                         {
                             var xml = XDocument.Load(input);
-                            return string.Join(Environment.NewLine, xml.Descendants(word + "p").Select(
-                                paragraph => string.Concat(paragraph.Descendants(word + "t").Select(node => node.Value))));
+                            XNamespace word = xml.Root.Name.Namespace;
+                            var body = xml.Root.Element(word + "body");
+                            if (body == null)
+                                throw new InvalidDataException("Missing DOCX document body.");
+
+                            return string.Join(Environment.NewLine, body.Descendants(word + "p").Select(paragraph =>
+                                string.Concat(paragraph.Descendants()
+                                    .Where(node => node.Ancestors(word + "p").FirstOrDefault() == paragraph)
+                                    .Select(node => node.Name == word + "t" ? node.Value :
+                                        node.Name == word + "tab" ? "\t" :
+                                        node.Name == word + "br" || node.Name == word + "cr" ? Environment.NewLine : ""))));
                         }
                     }
                 case ".pdf":
@@ -449,30 +532,23 @@ namespace FileConverter.Views
 
         private static string ReadPdf(string path)
         {
-            string executable = ConfigurationManager.AppSettings["PdfToTextPath"];
-            if (string.IsNullOrWhiteSpace(executable) || !File.Exists(executable))
-                throw new InvalidOperationException("Set PdfToTextPath to the installed pdftotext executable for PDF support.");
-
-            var start = new ProcessStartInfo(executable, "-enc UTF-8 -nopgbrk \"" + path + "\" -")
+            var text = new StringBuilder();
+            using (var document = PdfDocument.Open(path))
             {
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                StandardOutputEncoding = Encoding.UTF8
-            };
-            using (var process = Process.Start(start))
-            {
-                var text = process.StandardOutput.ReadToEndAsync();
-                if (!process.WaitForExit(60000))
-                {
-                    process.Kill();
-                    throw new IOException("PDF text extraction timed out.");
-                }
-                if (process.ExitCode != 0)
-                    throw new IOException("PDF text extraction failed.");
-                return text.GetAwaiter().GetResult();
+                foreach (var page in document.GetPages())
+                    text.AppendLine(ContentOrderTextExtractor.GetText(page));
             }
+
+            return text.ToString();
         }
+
+        private void ShowDocumentProgress(TranslationFileItem item, int current, int total, string stage)
+        {
+            ProgressLabel.Text = string.Format("{0}/{1} · {2} · {3}", current, total,
+                LocalizationManager.Text(stage), item.FileName);
+
+        }
+
     }
 
     // Information displayed for each translation document
@@ -484,8 +560,46 @@ namespace FileConverter.Views
 
         public string FileInformation { get; set; }
 
+        private string targetLanguage = "";
+        private string detectedSourceLanguage;
+
+        public string TargetLanguage
+        {
+            get { return targetLanguage; }
+            set
+            {
+                if (targetLanguage == value)
+                    return;
+                SetValue(ref targetLanguage, value);
+                NotifyDirectionChanged();
+            }
+        }
+
+        internal string DetectedSourceLanguage
+        {
+            set
+            {
+                detectedSourceLanguage = value;
+                NotifyDirectionChanged();
+            }
+        }
+
+        internal string EffectiveTargetLanguage
+        {
+            get
+            {
+                if (targetLanguage == "en" || targetLanguage == "fr")
+                    return targetLanguage;
+                return detectedSourceLanguage == "en" ? "fr" : detectedSourceLanguage == "fr" ? "en" : null;
+            }
+        }
+
+        private void NotifyDirectionChanged()
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TranslationDirection)));
+        }
+
         private string detectedLanguage;
-        private string translationDirection;
         private string status;
 
         public string DetectedLanguage
@@ -496,8 +610,12 @@ namespace FileConverter.Views
 
         public string TranslationDirection
         {
-            get { return translationDirection; }
-            set { SetValue(ref translationDirection, value); }
+            get
+            {
+                string target = EffectiveTargetLanguage;
+                return LocalizationManager.Text(target == "fr" ? "English → French" :
+                    target == "en" ? "French → English" : "Pending");
+            }
         }
 
         public string Status

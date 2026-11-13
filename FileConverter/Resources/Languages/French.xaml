@@ -104,7 +104,7 @@
     <sys:String x:Key="L_Select_format" xml:space="preserve">Sélectionner un format…</sys:String>
     <sys:String x:Key="L_Convert_Files" xml:space="preserve">Convertir les fichiers</sys:String>
     <sys:String x:Key="L_Document_Translation" xml:space="preserve">Traduction de documents</sys:String>
-    <sys:String x:Key="L_Translate_English_and_French_documents_to_plain_text_using_a_local_LibreTranslate_server" xml:space="preserve">Traduisez vos documents anglais et français en texte brut à l’aide d’un serveur LibreTranslate local.</sys:String>
+    <sys:String x:Key="L_Translate_English_and_French_documents_to_plain_text_using_a_local_LibreTranslate_server" xml:space="preserve">Traduisez vos documents en anglais et en français et exportez le texte traduit au format TXT, PDF ou Word.</sys:String>
     <sys:String x:Key="L_Supported_languages" xml:space="preserve">Langues prises en charge</sys:String>
     <sys:String x:Key="L_English" xml:space="preserve">Anglais</sys:String>
     <sys:String x:Key="L_French" xml:space="preserve">Français</sys:String>
@@ -187,5 +187,53 @@
     <sys:String x:Key="L_0_image_files_selected" xml:space="preserve">{0} fichier(s) sélectionné(s)</sys:String>
     <sys:String x:Key="L_0_completed_1_failed" xml:space="preserve">{0} opération(s) réussie(s), {1} échouée(s).</sys:String>
     <sys:String x:Key="L_Failed_to_translate_0" xml:space="preserve">Échec de la traduction : {0}</sys:String>
-    <sys:String x:Key="L_Follow_Windows">Suivre Windows</sys:String>
+    <sys:String x:Key="L_This_PDF_has_no_selectable_text_Run_OCR_on_scanned_pages_and_try_again">Ce PDF ne contient aucun texte sélectionnable. Appliquez la reconnaissance de caractères aux pages numérisées, puis réessayez.</sys:String>
+    <sys:String x:Key="L_LibreTranslate_request_failed_Check_the_local_server_0">La requête LibreTranslate a échoué. Vérifiez le serveur local. {0}</sys:String>
+    <sys:String x:Key="L_LibreTranslate_did_not_respond_in_time">LibreTranslate n’a pas répondu dans le délai prévu.</sys:String>
+    <sys:String x:Key="L_Target_language">Langue cible</sys:String>
+    <sys:String x:Key="L_Choose_English_or_French_as_the_target_language">Choisissez l’anglais ou le français comme langue cible.</sys:String>
+    <sys:String x:Key="L_Convert_files_heading">Convertir des fichiers</sys:String>
+    <sys:String x:Key="L_Add_files_and_choose_a_conversion">Ajoutez des fichiers, puis choisissez un mode de conversion.</sys:String>
+    <sys:String x:Key="L_Choose_a_conversion">Choisir une conversion</sys:String>
+    <sys:String x:Key="L_Word_to_PDF">Word → PDF</sys:String>
+    <sys:String x:Key="L_Image_to_PDF">Image → PDF</sys:String>
+    <sys:String x:Key="L_Excel_to_PDF">Excel → PDF</sys:String>
+    <sys:String x:Key="L_PDF_to_Word">PDF → Word</sys:String>
+    <sys:String x:Key="L_PDF_to_images">PDF → Images</sys:String>
+    <sys:String x:Key="L_Merge_into_one_PDF">Fusionner en PDF</sys:String>
+    <sys:String x:Key="L_Image_export_formats">Formats d’export d’image</sys:String>
+    <sys:String x:Key="L_JPEG_quality">Qualité JPEG</sys:String>
+    <sys:String x:Key="L_Open_output">Afficher le résultat</sys:String>
+    <sys:String x:Key="L_Overall_progress">Progression globale</sys:String>
+    <sys:String x:Key="L_Converting">Conversion en cours…</sys:String>
+    <sys:String x:Key="L_Done">Terminé</sys:String>
+    <sys:String x:Key="L_Waiting_for_merge">En attente de fusion…</sys:String>
+    <sys:String x:Key="L_Add_at_least_two_files_to_merge">Ajoutez au moins deux fichiers à fusionner.</sys:String>
+    <sys:String x:Key="L_At_least_two_readable_files_are_needed_to_merge">La fusion nécessite au moins deux fichiers lisibles.</sys:String>
+    <sys:String x:Key="L_This_file_type_cannot_be_merged">Ce type de fichier ne peut pas être fusionné.</sys:String>
+    <sys:String x:Key="L_This_file_type_does_not_match_the_selected_conversion">Ce type de fichier ne correspond pas à la conversion choisie.</sys:String>
+    <sys:String x:Key="L_0_of_1_files_processed">{0} fichiers traités sur {1}</sys:String>
+    <sys:String x:Key="L_The_output_could_not_be_found">Le fichier de sortie est introuvable.</sys:String>
+    <sys:String x:Key="L_INPUT_PATH">CHEMIN D’ENTRÉE</sys:String>
+    <sys:String x:Key="L_OUTPUT_PATH">CHEMIN DE SORTIE</sys:String>
+    <sys:String x:Key="L_Choose_the_conversion_method_that_matches_your_files_then_click_Convert_Files">Choisissez la conversion adaptée à vos fichiers, puis cliquez sur Convertir les fichiers.</sys:String>
+    <sys:String x:Key="L_Word_and_Excel_conversions_use_the_locally_installed_Office_apps_PDF_to_images_uses_Poppler">Les conversions Word et Excel utilisent les applications Office installées. La conversion PDF vers images utilise Poppler.</sys:String>
+    <sys:String x:Key="L_Convert_supports_Word_Excel_PDF_and_image_conversion_as_well_as_merging_files_into_one_PDF">L’écran Conversion prend en charge les documents Word, Excel, PDF et les images, ainsi que leur fusion dans un PDF.</sys:String>
+    <sys:String x:Key="L_Upload_files">Ajouter des fichiers</sys:String>
+    <sys:String x:Key="L_Choose_a_conversion_and_add_one_or_more_files">Choisissez une conversion et ajoutez un ou plusieurs fichiers.</sys:String>
+    <sys:String x:Key="L_Checking_the_local_translation_engine">Vérification du moteur de traduction local…</sys:String>
+    <sys:String x:Key="L_Starting_LibreTranslate_and_loading_language_models">Démarrage de LibreTranslate et chargement des modèles…</sys:String>
+    <sys:String x:Key="L_Start_LibreTranslate_at_0_then_retry">Démarrez LibreTranslate à l’adresse {0}, puis réessayez.</sys:String>
+    <sys:String x:Key="L_LibreTranslate_could_not_start_Install_it_with_python_m_pip_install_libretranslate_then_add_libretranslate_exe_to_PATH_or_set_LibreTranslatePath_0">Impossible de démarrer LibreTranslate. Installez-le avec python -m pip install libretranslate, puis ajoutez libretranslate.exe au PATH ou définissez LibreTranslatePath. {0}</sys:String>
+    <sys:String x:Key="L_LibreTranslate_stopped_during_startup_exit_code_0_Start_it_in_a_terminal_to_see_its_error">LibreTranslate s’est arrêté au démarrage (code {0}). Démarrez-le dans un terminal pour consulter l’erreur.</sys:String>
+    <sys:String x:Key="L_LibreTranslate_is_still_starting_Its_first_launch_can_download_language_models_Retry_in_a_moment">LibreTranslate démarre. Le premier lancement peut télécharger les modèles. Réessayez dans un instant.</sys:String>
+    <sys:String x:Key="L_Lost_the_connection_to_LibreTranslate_at_0_1">Connexion à LibreTranslate perdue à l’adresse {0}. {1}</sys:String>
+    <sys:String x:Key="L_Choose_an_existing_output_folder">Choisissez un dossier de sortie existant.</sys:String>
+    <sys:String x:Key="L_Choose_an_output_folder">Choisissez un dossier de sortie.</sys:String>
+    <sys:String x:Key="L_No_matching_history_records">Aucun résultat dans l’historique.</sys:String>
+    <sys:String x:Key="L_No_output_file">Aucun fichier de sortie</sys:String>
+    <sys:String x:Key="L_Translation_stopped">Traduction interrompue.</sys:String>
+    <sys:String x:Key="L_Automatic_direction">Sens automatique</sys:String>
+    <sys:String x:Key="L_Saving_translation">Enregistrement de la traduction…</sys:String>
+    <sys:String x:Key="L_0_completed_1_failed_2_skipped">{0} réussis, {1} échoués, {2} ignorés.</sys:String>
 </ResourceDictionary>

@@ -8,32 +8,20 @@
 
         <!-- PRIMARY ACTION BUTTON -->
 
-        <Style x:Key="ActionButton" TargetType="Button">
+        <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Background"
                     Value="{DynamicResource ActionBackgroundBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource ActionTextBrush}"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="18,10"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="6"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <!-- SECONDARY BUTTON -->
 
-        <Style x:Key="SecondaryButton" TargetType="Button">
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Background"
                     Value="{DynamicResource InputBackgroundBrush}"/>
             <Setter Property="Foreground"
@@ -372,6 +360,14 @@
                                Foreground="{DynamicResource SecondaryTextBrush}"
                                FontSize="12"
                                Margin="0,5,0,15"/>
+
+                    <DockPanel Margin="0,0,0,6">
+                        <TextBlock DockPanel.Dock="Right" Margin="10,0,0,0" MinWidth="40" TextAlignment="Right"
+                                   FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Text="{Binding Value, ElementName=OperationProgress, StringFormat={}{0:0}%}"/>
+                        <ProgressBar x:Name="OperationProgress" Height="8" Maximum="100" VerticalAlignment="Center"
+                                     AutomationProperties.Name="{DynamicResource L_Overall_progress}"/>
+                    </DockPanel>
 
                     <Button x:Name="EncryptButton"
                             Content="{DynamicResource L_Encrypt_Files}"

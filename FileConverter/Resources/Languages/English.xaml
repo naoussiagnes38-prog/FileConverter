@@ -104,7 +104,7 @@
     <sys:String x:Key="L_Select_format" xml:space="preserve">Select format...</sys:String>
     <sys:String x:Key="L_Convert_Files" xml:space="preserve">Convert Files</sys:String>
     <sys:String x:Key="L_Document_Translation" xml:space="preserve">Document Translation</sys:String>
-    <sys:String x:Key="L_Translate_English_and_French_documents_to_plain_text_using_a_local_LibreTranslate_server" xml:space="preserve">Translate English and French documents to plain text using a local LibreTranslate server.</sys:String>
+    <sys:String x:Key="L_Translate_English_and_French_documents_to_plain_text_using_a_local_LibreTranslate_server" xml:space="preserve">Translate English and French documents and export the translated text as TXT, PDF or Word.</sys:String>
     <sys:String x:Key="L_Supported_languages" xml:space="preserve">Supported languages</sys:String>
     <sys:String x:Key="L_English" xml:space="preserve">English</sys:String>
     <sys:String x:Key="L_French" xml:space="preserve">French</sys:String>
@@ -187,5 +187,53 @@
     <sys:String x:Key="L_0_image_files_selected" xml:space="preserve">{0} image file(s) selected</sys:String>
     <sys:String x:Key="L_0_completed_1_failed" xml:space="preserve">{0} completed, {1} failed.</sys:String>
     <sys:String x:Key="L_Failed_to_translate_0" xml:space="preserve">Failed to translate: {0}</sys:String>
-    <sys:String x:Key="L_Follow_Windows">Follow Windows</sys:String>
+    <sys:String x:Key="L_This_PDF_has_no_selectable_text_Run_OCR_on_scanned_pages_and_try_again">This PDF has no selectable text. Run OCR on scanned pages and try again.</sys:String>
+    <sys:String x:Key="L_LibreTranslate_request_failed_Check_the_local_server_0">LibreTranslate request failed. Check the local server. {0}</sys:String>
+    <sys:String x:Key="L_LibreTranslate_did_not_respond_in_time">LibreTranslate did not respond in time.</sys:String>
+    <sys:String x:Key="L_Target_language">Target language</sys:String>
+    <sys:String x:Key="L_Choose_English_or_French_as_the_target_language">Choose English or French as the target language.</sys:String>
+    <sys:String x:Key="L_Convert_files_heading">Convert files</sys:String>
+    <sys:String x:Key="L_Add_files_and_choose_a_conversion">Add files, then choose a conversion method.</sys:String>
+    <sys:String x:Key="L_Choose_a_conversion">Choose a conversion</sys:String>
+    <sys:String x:Key="L_Word_to_PDF">Word → PDF</sys:String>
+    <sys:String x:Key="L_Image_to_PDF">Image → PDF</sys:String>
+    <sys:String x:Key="L_Excel_to_PDF">Excel → PDF</sys:String>
+    <sys:String x:Key="L_PDF_to_Word">PDF → Word</sys:String>
+    <sys:String x:Key="L_PDF_to_images">PDF → Images</sys:String>
+    <sys:String x:Key="L_Merge_into_one_PDF">Merge into one PDF</sys:String>
+    <sys:String x:Key="L_Image_export_formats">Image export formats</sys:String>
+    <sys:String x:Key="L_JPEG_quality">JPEG quality</sys:String>
+    <sys:String x:Key="L_Open_output">Show output</sys:String>
+    <sys:String x:Key="L_Overall_progress">Overall progress</sys:String>
+    <sys:String x:Key="L_Converting">Converting…</sys:String>
+    <sys:String x:Key="L_Done">Done</sys:String>
+    <sys:String x:Key="L_Waiting_for_merge">Waiting for merge…</sys:String>
+    <sys:String x:Key="L_Add_at_least_two_files_to_merge">Add at least two files to merge.</sys:String>
+    <sys:String x:Key="L_At_least_two_readable_files_are_needed_to_merge">At least two readable files are needed to merge.</sys:String>
+    <sys:String x:Key="L_This_file_type_cannot_be_merged">This file type cannot be merged.</sys:String>
+    <sys:String x:Key="L_This_file_type_does_not_match_the_selected_conversion">This file type does not match the selected conversion.</sys:String>
+    <sys:String x:Key="L_0_of_1_files_processed">{0} of {1} files processed</sys:String>
+    <sys:String x:Key="L_The_output_could_not_be_found">The output could not be found.</sys:String>
+    <sys:String x:Key="L_INPUT_PATH">INPUT PATH</sys:String>
+    <sys:String x:Key="L_OUTPUT_PATH">OUTPUT PATH</sys:String>
+    <sys:String x:Key="L_Choose_the_conversion_method_that_matches_your_files_then_click_Convert_Files">Choose the conversion method that matches your files, then click Convert Files.</sys:String>
+    <sys:String x:Key="L_Word_and_Excel_conversions_use_the_locally_installed_Office_apps_PDF_to_images_uses_Poppler">Word and Excel conversions use the locally installed Office apps. PDF to images uses Poppler.</sys:String>
+    <sys:String x:Key="L_Convert_supports_Word_Excel_PDF_and_image_conversion_as_well_as_merging_files_into_one_PDF">Convert supports Word, Excel, PDF and image conversion, as well as merging files into one PDF.</sys:String>
+    <sys:String x:Key="L_Upload_files">Upload files</sys:String>
+    <sys:String x:Key="L_Choose_a_conversion_and_add_one_or_more_files">Choose a conversion and add one or more files.</sys:String>
+    <sys:String x:Key="L_Checking_the_local_translation_engine">Checking the local translation engine...</sys:String>
+    <sys:String x:Key="L_Starting_LibreTranslate_and_loading_language_models">Starting LibreTranslate and loading language models...</sys:String>
+    <sys:String x:Key="L_Start_LibreTranslate_at_0_then_retry">Start LibreTranslate at {0}, then retry.</sys:String>
+    <sys:String x:Key="L_LibreTranslate_could_not_start_Install_it_with_python_m_pip_install_libretranslate_then_add_libretranslate_exe_to_PATH_or_set_LibreTranslatePath_0">LibreTranslate could not start. Install it with python -m pip install libretranslate, then add libretranslate.exe to PATH or set LibreTranslatePath. {0}</sys:String>
+    <sys:String x:Key="L_LibreTranslate_stopped_during_startup_exit_code_0_Start_it_in_a_terminal_to_see_its_error">LibreTranslate stopped during startup (exit code {0}). Start it in a terminal to see its error.</sys:String>
+    <sys:String x:Key="L_LibreTranslate_is_still_starting_Its_first_launch_can_download_language_models_Retry_in_a_moment">LibreTranslate is still starting. Its first launch can download language models. Retry in a moment.</sys:String>
+    <sys:String x:Key="L_Lost_the_connection_to_LibreTranslate_at_0_1">Lost the connection to LibreTranslate at {0}. {1}</sys:String>
+    <sys:String x:Key="L_Choose_an_existing_output_folder">Choose an existing output folder.</sys:String>
+    <sys:String x:Key="L_Choose_an_output_folder">Choose an output folder.</sys:String>
+    <sys:String x:Key="L_No_matching_history_records">No matching history records.</sys:String>
+    <sys:String x:Key="L_No_output_file">No output file</sys:String>
+    <sys:String x:Key="L_Translation_stopped">Translation stopped.</sys:String>
+    <sys:String x:Key="L_Automatic_direction">Automatic direction</sys:String>
+    <sys:String x:Key="L_Saving_translation">Saving translation...</sys:String>
+    <sys:String x:Key="L_0_completed_1_failed_2_skipped">{0} completed, {1} failed, {2} skipped.</sys:String>
 </ResourceDictionary>

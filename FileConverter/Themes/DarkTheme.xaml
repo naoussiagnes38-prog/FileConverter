@@ -11,15 +11,20 @@
     <SolidColorBrush x:Key="SecondaryTextBrush" Color="#A5B3A9"/>
     <SolidColorBrush x:Key="BorderBrush" Color="#38443C"/>
 
-    <SolidColorBrush x:Key="AccentBrush" Color="#36A86C"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="#73DCA3"/>
     <SolidColorBrush x:Key="AccentHoverBrush" Color="#279258"/>
     <SolidColorBrush x:Key="SelectedItemBrush" Color="#304D3B"/>
 
     <SolidColorBrush x:Key="InputBackgroundBrush" Color="#202823"/>
-    <SolidColorBrush x:Key="DisabledTextBrush" Color="#69766D"/>
+    <SolidColorBrush x:Key="DisabledTextBrush" Color="#A1B4A8"/>
 
     <SolidColorBrush x:Key="InputBorderBrush" Color="#7E9586"/>
 
     <SolidColorBrush x:Key="ActionBackgroundBrush" Color="#116B3B"/>
+
+    <SolidColorBrush x:Key="ErrorTextBrush" Color="#FFA5A7"/>
+    <SolidColorBrush x:Key="UploadSurfaceBrush" Color="#202C25"/>
+    <SolidColorBrush x:Key="HoverSurfaceBrush" Color="#355844"/>
+    <SolidColorBrush x:Key="ActionTextBrush" Color="#FFFFFF"/>
 
 </ResourceDictionary>

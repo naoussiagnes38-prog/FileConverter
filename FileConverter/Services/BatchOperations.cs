@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,16 +14,19 @@ namespace FileConverter.Services
         private static readonly object OutputNameLock = new object();
 
         public static async Task RunAsync(UIElement view, IEnumerable<string> files,
-            Func<string, string> destination, Action<string, string> operation,
-            Action<string, bool> reportResult = null)
+            Func<string, string> destination, Action<string, string, Action<double>> operation,
+            Action<double> reportProgress)
         {
             view.IsEnabled = false;
             var errors = new List<string>();
             var renamed = new List<string>();
             int completed = 0;
+            var queue = files.ToArray();
+            int processed = 0;
+            reportProgress(0);
             try
             {
-                foreach (string file in files)
+                foreach (string file in queue)
                 {
                     string output = null;
                     bool success = false;
@@ -30,7 +34,20 @@ namespace FileConverter.Services
                     {
                         output = destination(file);
                         string requested = output;
-                        output = await Task.Run(() => WriteOutput(requested, temp => operation(file, temp)));
+                        int current = processed;
+                        int lastPercentage = -1;
+                        output = await Task.Run(() => WriteOutput(requested, temp => operation(file, temp, fraction =>
+                        {
+                            int percentage = (int)(100 * (current + Math.Min(fraction, 0.99)) / queue.Length);
+                            if (percentage <= lastPercentage)
+                                return;
+                            lastPercentage = percentage;
+                            view.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                if (processed == current)
+                                    reportProgress(percentage);
+                            }));
+                        })));
                         if (output != requested)
                             renamed.Add(Path.GetFileName(file) + " → " + Path.GetFileName(output));
                         completed++;
@@ -41,7 +58,8 @@ namespace FileConverter.Services
                         errors.Add(Path.GetFileName(file) + ": " + ex.Message);
                     }
                     HistoryView.Record(file, output, success);
-                    reportResult?.Invoke(file, success);
+                    processed++;
+                    reportProgress(100.0 * processed / queue.Length);
                 }
                 MessageBox.Show(string.Format(LocalizationManager.Text("{0} completed, {1} failed."), completed, errors.Count) + "\n" +
                     string.Join("\n", renamed) + (renamed.Count > 0 && errors.Count > 0 ? "\n" : "") +
@@ -53,21 +71,23 @@ namespace FileConverter.Services
             }
         }
 
-        public static string WriteOutput(string output, Action<string> write)
+        public static string WriteOutput(string output, Action<string> write, bool isDirectory = false)
         {
             output = Path.GetFullPath(output);
             string directory = Path.GetDirectoryName(output);
-            string name = Path.GetFileNameWithoutExtension(output);
-            string extension = Path.GetExtension(output);
+            string name = isDirectory ? Path.GetFileName(output) : Path.GetFileNameWithoutExtension(output);
+            string extension = isDirectory ? "" : Path.GetExtension(output);
             if (extension.Equals(".encrypted", StringComparison.OrdinalIgnoreCase))
             {
                 // Keep the original extension intact when the encrypted suffix is removed.
                 extension = Path.GetExtension(name) + extension;
                 name = Path.GetFileNameWithoutExtension(name);
             }
-            string temp = Path.Combine(directory, Guid.NewGuid().ToString("N") + ".tmp");
+            string temp = Path.Combine(directory, Guid.NewGuid().ToString("N") + ".tmp" + extension);
             try
             {
+                if (isDirectory)
+                    Directory.CreateDirectory(temp);
                 write(temp);
                 lock (OutputNameLock)
                 {
@@ -80,7 +100,10 @@ namespace FileConverter.Services
 
                         try
                         {
-                            File.Move(temp, candidate);
+                            if (isDirectory)
+                                Directory.Move(temp, candidate);
+                            else
+                                File.Move(temp, candidate);
                             return candidate;
                         }
                         catch (IOException) when (File.Exists(candidate) || Directory.Exists(candidate))
@@ -92,7 +115,9 @@ namespace FileConverter.Services
             }
             finally
             {
-                if (File.Exists(temp))
+                if (isDirectory && Directory.Exists(temp))
+                    Directory.Delete(temp, true);
+                else if (File.Exists(temp))
                     File.Delete(temp);
             }
         }

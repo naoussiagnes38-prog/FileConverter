@@ -395,7 +395,8 @@ namespace FileConverter.Views
             await BatchOperations.RunAsync(this, selectedFiles.Select(file => file.FilePath),
                 file => Path.Combine(custom ? outputFolder : Path.GetDirectoryName(file),
                     Path.GetFileName(file) + ".zip"),
-                (file, output) => service.CompressFile(file, output, level));
+                (file, output, progress) => service.CompressFile(file, output, level, progress),
+                percent => OperationProgress.Value = percent);
         }
     }
 }

@@ -78,13 +78,15 @@ namespace FileConverter.Views
         // Select initial options
         private void ApplyInitialSelections()
         {
-            LightThemeRadio.IsChecked = selectedTheme == "Light";
-            DarkThemeRadio.IsChecked = selectedTheme == "Dark";
-            SystemThemeRadio.IsChecked = selectedTheme != "Light" && selectedTheme != "Dark";
+            string theme = selectedTheme == "Dark" || selectedTheme == "Light"
+                ? selectedTheme : FileConverter.Services.ThemeManager.GetSystemTheme();
+            string language = selectedLanguage == "French" || selectedLanguage == "English"
+                ? selectedLanguage : FileConverter.Services.LocalizationManager.SystemLanguage;
 
-            EnglishRadio.IsChecked = selectedLanguage == "English";
-            FrenchRadio.IsChecked = selectedLanguage == "French";
-            SystemLanguageRadio.IsChecked = selectedLanguage != "English" && selectedLanguage != "French";
+            LightThemeRadio.IsChecked = theme == "Light";
+            DarkThemeRadio.IsChecked = theme == "Dark";
+            EnglishRadio.IsChecked = language == "English";
+            FrenchRadio.IsChecked = language == "French";
         }
 
         // Theme selection

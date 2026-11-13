@@ -19,7 +19,7 @@
             <Setter Property="Margin" Value="0,0,15,0"/>
         </Style>
 
-        <Style x:Key="FilterButton" TargetType="Button">
+        <Style x:Key="FilterButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Padding" Value="16,8"/>
             <Setter Property="Margin" Value="0,0,8,0"/>
             <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
@@ -43,6 +43,12 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
             <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SelectedItemBrush}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style TargetType="DataGridRow">
@@ -53,7 +59,7 @@
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Auto">
+                  HorizontalScrollBarVisibility="Disabled">
 
         <StackPanel Margin="5">
 
@@ -106,7 +112,7 @@
                         <TextBlock x:Name="SuccessCount"
                                    FontSize="30"
                                    FontWeight="Bold"
-                                   Foreground="#25865B"
+                                   Foreground="{DynamicResource AccentBrush}"
                                    Margin="0,10,0,0"/>
                     </StackPanel>
                 </Border>
@@ -123,7 +129,7 @@
                         <TextBlock x:Name="FailureCount"
                                    FontSize="30"
                                    FontWeight="Bold"
-                                   Foreground="#D65B5B"
+                                   Foreground="{DynamicResource ErrorTextBrush}"
                                    Margin="0,10,0,0"/>
                     </StackPanel>
                 </Border>
@@ -147,10 +153,10 @@
                                Margin="0,0,0,10"/>
 
                     <TextBox x:Name="SearchTextBox"
-                             Height="38"
-                             Padding="10,7"
-                             FontSize="13"
-                             VerticalContentAlignment="Center"
+                             MinHeight="38"
+                             Padding="10,8"
+                             FontSize="14"
+                             AutomationProperties.Name="{DynamicResource L_Search_history}"
                              Background="{DynamicResource InputBackgroundBrush}"
                              Foreground="{DynamicResource PrimaryTextBrush}"
                              BorderBrush="{DynamicResource InputBorderBrush}"
@@ -220,42 +226,67 @@
                               Background="{DynamicResource CardBackgroundBrush}"
                               Foreground="{DynamicResource PrimaryTextBrush}"
                               BorderThickness="0"
-                              RowHeight="55"
-                              ColumnHeaderHeight="45"
-                              MinHeight="300"
-                              SelectionMode="Single">
+                              MinRowHeight="40"
+                              ColumnHeaderHeight="40"
+                              MaxHeight="360"
+                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow">
 
                         <DataGrid.Columns>
 
-                            <DataGridTextColumn Header="FILE NAME"
-                                                Binding="{Binding FileName}"
-                                                Width="2*"/>
-
-                            <DataGridTextColumn Header="FROM"
-                                                Binding="{Binding InputFormat}"
-                                                Width="*"/>
-
-                            <DataGridTextColumn Header="TO"
-                                                Binding="{Binding OutputFormat}"
-                                                Width="*"/>
-
-                            <DataGridTextColumn Header="DATE"
-                                                Binding="{Binding Date}"
-                                                Width="1.5*"/>
-
-                            <DataGridTextColumn Header="STATUS"
-                                                Binding="{Binding DisplayStatus}"
-                                                Width="*"/>
+                            <DataGridTextColumn Header="FILE NAME" Binding="{Binding FileName}" Width="*" MinWidth="140">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                        <Setter Property="Margin" Value="6,5"/>
+                                        <Setter Property="ToolTip" Value="{Binding FileName}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="DATE" Binding="{Binding Date}" Width="155"/>
+                            <DataGridTextColumn Header="STATUS" Binding="{Binding DisplayStatus}" Width="110"/>
 
                         </DataGrid.Columns>
 
                     </DataGrid>
 
-                    <TextBlock Text="{DynamicResource L_History_records_will_appear_here}"
-                               Foreground="{DynamicResource SecondaryTextBrush}"
-                               FontSize="12"
-                               HorizontalAlignment="Center"
-                               Margin="0,20,0,5"/>
+                    <TextBlock Text="{DynamicResource L_No_matching_history_records}"
+                               Foreground="{DynamicResource SecondaryTextBrush}" TextWrapping="Wrap"
+                               HorizontalAlignment="Center" Margin="0,16,0,5">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasItems, ElementName=HistoryDataGrid}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <StackPanel Margin="0,14,0,0">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItem, ElementName=HistoryDataGrid}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock Text="{DynamicResource L_INPUT_PATH}" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <TextBox Text="{Binding SelectedItem.DisplayInput, ElementName=HistoryDataGrid, Mode=OneWay}"
+                                 IsReadOnly="True" TextWrapping="Wrap" HorizontalScrollBarVisibility="Disabled" Padding="8,6" Margin="0,4,0,9"
+                                 AutomationProperties.Name="{DynamicResource L_INPUT_PATH}"/>
+                        <TextBlock Text="{DynamicResource L_OUTPUT_PATH}" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <TextBox Text="{Binding SelectedItem.DisplayOutput, ElementName=HistoryDataGrid, Mode=OneWay}"
+                                 IsReadOnly="True" TextWrapping="Wrap" HorizontalScrollBarVisibility="Disabled" Padding="8,6" Margin="0,4,0,0"
+                                 AutomationProperties.Name="{DynamicResource L_OUTPUT_PATH}"/>
+                    </StackPanel>
 
                 </StackPanel>
 

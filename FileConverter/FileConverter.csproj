@@ -35,6 +35,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="UglyToad.PdfPig.Core">
+      <HintPath>..\packages\PdfPig.0.1.8\lib\net451\UglyToad.PdfPig.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.DocumentLayoutAnalysis">
+      <HintPath>..\packages\PdfPig.0.1.8\lib\net451\UglyToad.PdfPig.DocumentLayoutAnalysis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Fonts">
+      <HintPath>..\packages\PdfPig.0.1.8\lib\net451\UglyToad.PdfPig.Fonts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Tokenization">
+      <HintPath>..\packages\PdfPig.0.1.8\lib\net451\UglyToad.PdfPig.Tokenization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Tokens">
+      <HintPath>..\packages\PdfPig.0.1.8\lib\net451\UglyToad.PdfPig.Tokens.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig">
+      <HintPath>..\packages\PdfPig.0.1.8\lib\net451\UglyToad.PdfPig.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
@@ -63,6 +91,9 @@
     <Compile Include="Services\LocalizationManager.cs" />
     <Compile Include="Services\ThemeManager.cs" />
     <Compile Include="Services\BatchOperations.cs" />
+    <Compile Include="Services\LocalTranslationServer.cs" />
+    <Compile Include="Services\TranslatedDocumentWriter.cs" />
+    <Compile Include="Services\DesktopConversionService.cs" />
     <Compile Include="Views\CompressView.xaml.cs">
       <DependentUpon>CompressView.xaml</DependentUpon>
     </Compile>
@@ -83,6 +114,13 @@
     </Compile>
     <Compile Include="Views\TranslateView.xaml.cs">
       <DependentUpon>TranslateView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\OutputLocationPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Controls\OutputLocationPicker.xaml.cs">
+      <DependentUpon>OutputLocationPicker.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -170,6 +208,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>

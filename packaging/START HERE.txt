@@ -1,0 +1,27 @@
+FileConverter with offline English and French translation
+Windows 11 x64 portable build
+
+1. Extract the entire ZIP to a local folder.
+2. Open FileConverter.exe.
+3. Open Translate, add a document, and click Translate. The bundled engine
+   starts in the background. The Python runtime, both Argos translation
+   packages, and both MiniSBD sentence models are included.
+
+To test translation on this computer, disconnect from the internet and
+double-click Offline Translation Test.cmd. It should print a translation
+in each direction. Then test a real document in FileConverter.
+
+If Windows reports a missing MSVCP140 DLL or a native dependency import
+fails, run Prerequisites\VC_redist.x64.exe and retry. This Microsoft
+redistributable is included for offline installation.
+
+This package bundles translation dependencies. The Office and Poppler
+requirements for their respective conversion methods still apply.
+
+Component notices and metadata are in TranslationRuntime\site-packages.
+Source archives for the staged translation components are in
+ThirdPartySource. Upstream projects and model releases:
+https://github.com/LibreTranslate/LibreTranslate
+https://github.com/argosopentech/argospm-index
+https://github.com/LibreTranslate/MiniSBD/releases/tag/v0.0.1
+https://www.python.org/downloads/release/python-31210/
